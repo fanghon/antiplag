@@ -10,7 +10,7 @@
 
 ## 使用
     使用说明参见deploy子目录下的软件使用文档。
-    ![程序主界面](https://github.com/fanghon/antiplag/blob/master/maingui.png) 
+    ![程序主界面](https://github.com/fanghon/antiplag/blob/master/maingui.png?raw=true) 
   
 ## 原理
     系统采用的主要技术是自然语言处理（nlp）中的文本相似度计算。程序类文本的相似度比较基于两个开放系统：一个是基于网络服务的moss系统（斯坦福大学开放的支持十几种编程语言代码相似度比较的系统 http://theory.stanford.edu/~aiken/moss/ ），另一个是本地执行的sim系统（ https://dickgrune.com/Programs/similarity_tester/ 支持java、c等语言的文本相似度比较）。本系统在它们基础上进行了二次开发和封装，针对moss系统，开发出了客户端存取模块，实现了作业提交、结果获取和解析、结果排序等功能；针对sim，则将其集成到系统中，在moss因网络故障等原因不可用时，可作为替代产品使用。
