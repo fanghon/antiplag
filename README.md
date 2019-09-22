@@ -5,7 +5,8 @@
     jdk1.6及以上版本
 
 ## 安装
-    直接下载或clone该项目，在项目的deploy子目录下，是软件的发布版。源代码版可以直接导入eclipse，主入口类是gui.plag.edu下的PlagGUI。
+    直接下载或clone该项目，在项目的deploy子目录下，是软件的发布版。
+    源代码版可以直接导入eclipse，主入口类是gui.plag.edu下的PlagGUI。
 
 ## 使用
    使用说明参见deploy子目录下的软件使用文档。
