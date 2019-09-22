@@ -1,0 +1,6 @@
+File D:\fh\projects\Plag\testdata\tempsrc\zy_daifei_1.java: 223 tokens, 49 lines
+File D:\fh\projects\Plag\testdata\tempsrc\zy_fangchenfeng_1.java: 280 tokens, 83 lines
+Total: 503 tokens
+
+D:\fh\projects\Plag\testdata\tempsrc\zy_daifei_1.java consists for 29 % of D:\fh\projects\Plag\testdata\tempsrc\zy_fangchenfeng_1.java material
+D:\fh\projects\Plag\testdata\tempsrc\zy_fangchenfeng_1.java consists for 22 % of D:\fh\projects\Plag\testdata\tempsrc\zy_daifei_1.java material
