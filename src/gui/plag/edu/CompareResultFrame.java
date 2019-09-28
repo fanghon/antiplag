@@ -83,7 +83,7 @@ public class CompareResultFrame extends JFrame {
 			}
 		});
 		setTitle("\u6BD4\u8F83\u7ED3\u679C");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(200, 200, 557, 506);
 		setLocationRelativeTo(null);
 		

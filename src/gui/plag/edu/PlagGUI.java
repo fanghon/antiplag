@@ -11,18 +11,24 @@ import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.UIManager;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+
+import org.jvnet.substance.SubstanceLookAndFeel;
+import org.jvnet.substance.skin.BusinessBlueSteelSkin;
 
 import moss.plag.edu.Http;
 
@@ -49,7 +55,7 @@ public class PlagGUI extends JFrame {
 			public void run() {
 				try {
 					PlagGUI frame = new PlagGUI();
-					frame.setVisible(true);
+		            frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -61,10 +67,16 @@ public class PlagGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PlagGUI() {
-		setTitle("\u4F5C\u4E1A\u76F8\u4F3C\u5EA6\u6BD4\u8F83\u7CFB\u7EDF");
+		setTitle("\u4F5C\u4E1A\u67E5\u91CD\u7CFB\u7EDF");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 200, 537, 454);
+		setBounds(300, 200, 537, 423);
 		setLocationRelativeTo(null);
+		
+		JFrame.setDefaultLookAndFeelDecorated(true);  
+        JDialog.setDefaultLookAndFeelDecorated(true);  
+        SubstanceLookAndFeel.setSkin(new BusinessBlueSteelSkin()); 
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -263,15 +275,15 @@ public class PlagGUI extends JFrame {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//关于
-				String info = "作业相似度比较系统V2.0\r\n作者：方宏  fanghong_jmi@sina.com\r\n保留版权";
+				String info = "作业查重系统\r\n 联系方式： fanghong_jmi@sina.com";
 				JOptionPane.showMessageDialog(PlagGUI.this, info, "系统信息", JOptionPane.INFORMATION_MESSAGE);
 
 			}
 		});
-		button_2.setBounds(385, 253, 93, 23);
+		button_2.setBounds(385, 313, 93, 23);
 		contentPane.add(button_2);
 		
-		JButton btnNewButton_1 = new JButton("\u8F6C\u6362\u6587\u4EF6");
+		JButton btnNewButton_1 = new JButton("\u63D0\u53D6\u6587\u4EF6");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//转换文件，将提交的作业文件转成适合比较的形式
@@ -280,7 +292,7 @@ public class PlagGUI extends JFrame {
 				fcframe.setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(385, 310, 93, 23);
+		btnNewButton_1.setBounds(385, 251, 93, 23);
 		contentPane.add(btnNewButton_1);
 	}
 

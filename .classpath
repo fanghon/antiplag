@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="lib/shinglecloud-0.51.jar"/>
 	<classpathentry kind="lib" path="lib/tika-app-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/ant.jar"/>
+	<classpathentry kind="lib" path="lib/substance-5.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

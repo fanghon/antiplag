@@ -51,6 +51,7 @@ public class FileConvertFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public FileConvertFrame() {
+		setTitle("\u63D0\u53D6\u6587\u4EF6");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(200, 300, 450, 300);
 		this.setLocationRelativeTo(null);
@@ -103,7 +104,7 @@ public class FileConvertFrame extends JFrame {
 		btnNewButton_1.setBounds(306, 130, 114, 23);
 		contentPane.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("\u8F6C  \u6362");
+		JButton btnNewButton_2 = new JButton("\u63D0 \u53D6");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			  //×ª»»ÎÄ¼þ
@@ -183,7 +184,7 @@ public class FileConvertFrame extends JFrame {
 		btnNewButton_2.setBounds(306, 199, 114, 23);
 		contentPane.add(btnNewButton_2);
 		
-		JLabel lblNewLabel = new JLabel("\u8F6C\u6362\u7684\u6587\u4EF6\u7C7B\u578B");
+		JLabel lblNewLabel = new JLabel("\u63D0\u53D6\u7684\u6587\u4EF6\u7C7B\u578B");
 		lblNewLabel.setBounds(21, 203, 101, 15);
 		contentPane.add(lblNewLabel);
 		
