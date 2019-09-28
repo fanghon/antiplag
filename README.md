@@ -5,7 +5,7 @@
 jdk1.6及以上版本
 
 ## 安装
-直接下载或clone项目源代码版，或下载软件的发布版(releases)。
+直接下载或clone项目源代码版，或下载软件的发布版[releases](https://github.com/fanghon/antiplag/releases)。
 源代码版可以直接导入eclipse，主入口类是gui.plag.edu下的PlagGUI。
 
 ## 使用
