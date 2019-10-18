@@ -1,6 +1,7 @@
 package gui.plag.edu;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -23,6 +24,9 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
@@ -47,6 +51,8 @@ public class PlagGUI extends JFrame {
 	private JComboBox combMethod;
 	private JComboBox combLang;
 
+	
+	WinCMD cmd;
 	/**
 	 * Launch the application.
 	 */
@@ -166,7 +172,7 @@ public class PlagGUI extends JFrame {
 		panel_1.add(label_1);
 		
 		combLang = new JComboBox();
-		combLang.setModel(new DefaultComboBoxModel(new String[] {"java", "c", "csharp", "javascript"}));
+		combLang.setModel(new DefaultComboBoxModel(new String[] {"java", "c", "python", "csharp", "javascript"}));
 		combLang.setBounds(220, 51, 75, 21);
 		panel_1.add(combLang);
 		
@@ -182,6 +188,7 @@ public class PlagGUI extends JFrame {
 					combLang.removeAllItems();
 					combLang.addItem("java");
 					combLang.addItem("c");
+					combLang.addItem("python");
 					combLang.addItem("csharp");	
 					combLang.addItem("javascript");
 					
@@ -189,10 +196,16 @@ public class PlagGUI extends JFrame {
 					combLang.removeAllItems();
 					combLang.addItem("java");
 					combLang.addItem("c");
+				}else if("jplag".equals(method)) {
+					combLang.removeAllItems();
+					combLang.addItem("java");
+					combLang.addItem("c/c++");
+					combLang.addItem("python3");
+					combLang.addItem("text");
 				}
 			}
 		});
-		combMethod.setModel(new DefaultComboBoxModel(new String[] {"moss", "sim"}));
+		combMethod.setModel(new DefaultComboBoxModel(new String[] {"moss", "jplag", "sim"}));
 		combMethod.setBounds(80, 51, 70, 21);
 		panel_1.add(combMethod);
 		
@@ -233,14 +246,14 @@ public class PlagGUI extends JFrame {
 								}
 								
 							}
-							WinCMD cmd = new WinCMD();
+							cmd = new WinCMD();
 							int res = cmd.exec(methodtype, lang, value, f.getAbsolutePath());
 							if(res==0){
-								JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，请查看结果");
+								JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，请查看结果。如果结果为空，可以尝试调低相似度限值");
 							}else if(res<0){
 								JOptionPane.showMessageDialog(PlagGUI.this, "执行失败，请重试");
 							}else if(res>0){
-								JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，未发现符合限值要求的结果");
+								JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，未发现符合限值要求的结果，可以尝试调低相似度限值");
 							}
 						}			
 						
@@ -264,7 +277,37 @@ public class PlagGUI extends JFrame {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//查看结果
+				String methodtype = (String)combMethod.getSelectedItem();
+				String lang = (String)combLang.getSelectedItem();
+
 				CompareResultFrame crf = new CompareResultFrame();
+				if(radBntProgram.isSelected()) {
+					if("jplag".equals(methodtype)) {
+						File rf = new File("jplagresult/matches_avg.csv");
+						crf.setResfile(rf);
+						
+						rf = new File("jplagresult/index.html");
+						try {  //加载默认浏览器，显示结果网页
+							Desktop.getDesktop().browse(rf.toURI());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();							
+						} 
+					}else if("moss".equals(methodtype)) {
+						try {  //加载默认浏览器，显示结果网页
+							String url = cmd.getMoss().getUrl();
+							if(url!=null) {
+							  Desktop.getDesktop().browse(new URI(url));
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();							
+						} 						
+					}
+					
+					
+				}
+
 				crf.setVisible(true);
 			}
 		});

@@ -11,11 +11,17 @@ import java.util.regex.Pattern;
 import java.io.*;
 
 import data.plag.edu.SimData;
+import jplag.ExitException;
+import jplag.JPlag;
+import jplag.Program;
+import jplag.options.CommandLineOptions;
 import moss.plag.edu.*;
 
 public class WinCMD {
-	String outfile = "out.txt";
+	String outfile = "out.txt"; 
 	String mossoutfile = "mossout.txt";
+	Moss moss = null;
+			
 	public static void main(String args[]) {
 		/*
 		 * if (args.length < 1) {
@@ -66,6 +72,12 @@ public class WinCMD {
 		
 		
 	}
+	public Moss getMoss() {
+		return moss;
+	}
+	public void setMoss(Moss moss) {
+		this.moss = moss;
+	}
 	//清空out文件
 	public void clearOut(File f){
    	if(f!=null && f.exists()){
@@ -95,6 +107,8 @@ public class WinCMD {
 			res = execMossJava(lang,threshold, files, lists);
 		}else if("sim".equals(methodtype)){
 			res = this.execSim(lang, threshold, files, lists);
+		}else if("jplag".equals(methodtype)) {
+			res = this.execJplag(lang, threshold, files, lists);
 		}
 		return res;
 	}
@@ -117,6 +131,56 @@ public class WinCMD {
 		
 		return res;
 	}
+	
+	//调用Jplag的方法，对代码进行比较,成功返回0，失败返回-1
+	public int execJplag(String lang,float threshold,String files,List<SimData> lists){
+		  int res = -1;
+			String INPUT_FILE_FOLDER_NAME=files ;  //输入文件目录
+			String jplagResultsFolderName="./jplagresult/";   //检查结果放在项目的子目录下
+			float MINIMUM_FILE_SIMILARITY = threshold ;
+			String EXCLUDE_FILES = null ;  
+			ArrayList<String> args = new ArrayList<String>();
+			
+			args.add("-l");
+			if(!"java".equals(lang)) {
+			   args.add(lang);    //设置语言类型参数，不加此参数，就使用默认值，为java19 
+			}else {
+			   args.add("java19");
+			}
+			args.add("-s"); //递归查询输入文件目录下的子目录
+			args.add("-r"); //指定结果存放的路径
+			args.add(jplagResultsFolderName);
+			args.add("-m");  //设置相似度检查门限参数值
+			args.add((int) (MINIMUM_FILE_SIMILARITY) + "%");
+			if (EXCLUDE_FILES!=null) { // 设置被排除的文件
+				args.add("-x");
+				args.add(EXCLUDE_FILES);
+			}
+			args.add(INPUT_FILE_FOLDER_NAME);
+			String[] toPass = new String[args.size()];
+			toPass = args.toArray(toPass);
+	      //  System.out.println(toPass.toString());
+	       // JPlag.main(toPass);
+	        try {
+                CommandLineOptions options = new CommandLineOptions(toPass, null);
+                Program program = new Program(options);
+                 
+                System.out.println("jplag initialize ok "+program.get_commandLine());
+                program.run();
+                res = 0; //执行成功
+            }
+            catch(ExitException ex) {
+                System.out.println("Error: "+ex.getReport());
+                
+            } 
+		  
+	      return res ; 
+	}
+	
+
+	
+	
+	
 	//java客户端执行moss,参数lang语言，threshold相似度限值，files比较文件所在的目录， lists比较结果，成功返回0，失败返回-1，
 	//无符合条件结果返回1
 	public int execMossJava(String lang,float threshold,String files,List<SimData> lists){
@@ -128,7 +192,7 @@ public class WinCMD {
 		  File dir = new File(files);
 	      res = mc.sendMoss(dir,lang);
 	      if(res==0){  //上传成功
-	 		 Moss moss = new Moss();
+	 		 moss = new Moss();
 			 res = moss.analyMoss(mossoutfile,threshold, lists);
 			 if(res==0 && lists.size()>0){ //分析到有效数据
 			    FileIO.saveFile(new File(outfile), lists,2,"from stanford:"+moss.getUrl()); //保存结果到out.txt文件
@@ -170,7 +234,7 @@ public class WinCMD {
 		// File file = new File("mossout.txt");
 		// analySim(file,lang,lists);	
 		if(res==0){ //上传执行成功
-		 Moss moss = new Moss();
+		 moss = new Moss();
 		 res = moss.analyMoss(mossoutfile,threshold, lists);
 		 if(res==0 && lists.size()>0){ //分析到有效数据,注意：如果没有超过门限的值，size也为0
 		    FileIO.saveFile(new File(outfile), lists,2,"from stanford:"+moss.getUrl()); //保存结果到out.txt文件

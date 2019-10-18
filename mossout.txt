@@ -1,35 +1,6 @@
-Uploading .\testdata\wpsdoc\bixinghui.doc...done
-Uploading .\testdata\wpsdoc\chengxi.doc...done
-Uploading .\testdata\wpsdoc\chenxiaofeng.doc...done
-Uploading .\testdata\wpsdoc\chenyufan.doc...done
-Uploading .\testdata\wpsdoc\gaoming.doc.docx...done
-Uploading .\testdata\wpsdoc\gezhongqi.doc...done
-Uploading .\testdata\wpsdoc\huangkaiming.doc...done
-Uploading .\testdata\wpsdoc\huangzhi.doc...done
-Uploading .\testdata\wpsdoc\jihua.docx...done
-Uploading .\testdata\wpsdoc\lichenguang.doc...done
-Uploading .\testdata\wpsdoc\litao.docx...done
-Uploading .\testdata\wpsdoc\majunxian.doc...done
-Uploading .\testdata\wpsdoc\nijinhua.doc...done
-Uploading .\testdata\wpsdoc\shaohaohao.doc...done
-Uploading .\testdata\wpsdoc\shaoyuanxu.doc...done
-Uploading .\testdata\wpsdoc\shenjie.doc...done
-Uploading .\testdata\wpsdoc\sunshangxing.docx...done
-Uploading .\testdata\wpsdoc\tangwenyuan.doc...done
-Uploading .\testdata\wpsdoc\wangjingxuan.doc...done
-Uploading .\testdata\wpsdoc\wangpeng.doc...done
-Uploading .\testdata\wpsdoc\wangwei.docx...done
-Uploading .\testdata\wpsdoc\wuhang.doc...done
-Uploading .\testdata\wpsdoc\xutianxiu.doc...done
-Uploading .\testdata\wpsdoc\yanghao.docx...done
-Uploading .\testdata\wpsdoc\yangweichao.doc...done
-Uploading .\testdata\wpsdoc\yankai.docx...done
-Uploading .\testdata\wpsdoc\zhangsheng.doc...done
-Uploading .\testdata\wpsdoc\zhangshuyang.doc...done
-Uploading .\testdata\wpsdoc\zhaoxingyi.doc...done
-Uploading .\testdata\wpsdoc\zhenglinpeng.doc...done
-Uploading .\testdata\wpsdoc\zhengxianyang.doc...done
-Uploading .\testdata\wpsdoc\zhuangyu.doc...done
-Uploading .\testdata\wpsdoc\zhuchengpeng.docx...done
+Uploading .\testdata\python\demo.py...done
+Uploading .\testdata\python\demo1.py...done
+Uploading .\testdata\python\lprcmd.py...done
+Uploading .\testdata\python\lprcmd2.py...done
 Query submitted.  Waiting for the server's response.
-http://moss.stanford.edu/results/306585337
+http://moss.stanford.edu/results/116291522
