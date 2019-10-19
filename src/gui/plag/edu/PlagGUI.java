@@ -231,7 +231,7 @@ public class PlagGUI extends JFrame {
 						  args[0] = path;
 						  args[1] = threshold;
 						  ShingleSim.main(args)	;  // 执行比较
-						  JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，请查看结果");	
+						  JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，请查看结果。\r\n如果结果为空，可以尝试调低相似度限值");	
 						}else if(radBntProgram.isSelected()){ //比较代码程序
 							String methodtype = (String)combMethod.getSelectedItem();
 							String lang = (String)combLang.getSelectedItem();
@@ -249,7 +249,7 @@ public class PlagGUI extends JFrame {
 							cmd = new WinCMD();
 							int res = cmd.exec(methodtype, lang, value, f.getAbsolutePath());
 							if(res==0){
-								JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，请查看结果。如果结果为空，可以尝试调低相似度限值");
+								JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，请查看结果。\r\n如果结果为空，可以尝试调低相似度限值");
 							}else if(res<0){
 								JOptionPane.showMessageDialog(PlagGUI.this, "执行失败，请重试");
 							}else if(res>0){
