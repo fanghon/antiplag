@@ -2,7 +2,7 @@
 软件主要检查、比较学生提交的电子档文本相似度，能对程序语言（如java、c等）、中英文文档（如实验报告等）之间的文本相似度进行比较分析，输出相似度高的文档，进而辅助发现学生之间互相抄袭的行为。
 
 ## 需求
-jdk11
+[jdk11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
 
 ## 安装
 直接下载或clone项目源代码版，或下载软件的发布版[releases](https://github.com/fanghon/antiplag/releases)。

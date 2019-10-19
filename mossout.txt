@@ -1,6 +1,11 @@
-Uploading .\testdata\python\demo.py...done
-Uploading .\testdata\python\demo1.py...done
-Uploading .\testdata\python\lprcmd.py...done
-Uploading .\testdata\python\lprcmd2.py...done
+Uploading .\testdata\javaabctograde\gaoxinjian.java...done
+Uploading .\testdata\javaabctograde\jinghanyuan.java...done
+Uploading .\testdata\javaabctograde\liuchenyi.java...done
+Uploading .\testdata\javaabctograde\TianYang.java...done
+Uploading .\testdata\javaabctograde\wangdongyue.java...done
+Uploading .\testdata\javaabctograde\yangfan.java...done
+Uploading .\testdata\javaabctograde\yangkaiyue.java...done
+Uploading .\testdata\javaabctograde\zhongyue.java...done
+Uploading .\testdata\javaabctograde\zhouton.java...done
 Query submitted.  Waiting for the server's response.
-http://moss.stanford.edu/results/439447773
+http://moss.stanford.edu/results/961574766

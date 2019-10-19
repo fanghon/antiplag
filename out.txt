@@ -1,3 +1,16 @@
-1  79.425835%  1.txt  2.txt
-2  35.714287%  gaoxinjian.txt  jinghanyuan.txt
-from fh  Sat Oct 19 09:21:22 CST 2019
+1  98.0%  testdata\javaabctograde\wangdongyue.java   testdata\javaabctograde\zhongyue.java 
+2  96.0%  testdata\javaabctograde\yangkaiyue.java   testdata\javaabctograde\zhouton.java 
+3  74.0%  testdata\javaabctograde\liuchenyi.java   testdata\javaabctograde\wangdongyue.java 
+4  74.0%  testdata\javaabctograde\liuchenyi.java   testdata\javaabctograde\zhongyue.java 
+5  70.0%  testdata\javaabctograde\liuchenyi.java   testdata\javaabctograde\TianYang.java 
+6  61.0%  testdata\javaabctograde\gaoxinjian.java   testdata\javaabctograde\liuchenyi.java 
+7  61.0%  testdata\javaabctograde\TianYang.java   testdata\javaabctograde\wangdongyue.java 
+8  61.0%  testdata\javaabctograde\TianYang.java   testdata\javaabctograde\zhongyue.java 
+9  56.0%  testdata\javaabctograde\jinghanyuan.java   testdata\javaabctograde\yangkaiyue.java 
+10  56.0%  testdata\javaabctograde\jinghanyuan.java   testdata\javaabctograde\zhouton.java 
+11  53.0%  testdata\javaabctograde\gaoxinjian.java   testdata\javaabctograde\TianYang.java 
+12  51.0%  testdata\javaabctograde\gaoxinjian.java   testdata\javaabctograde\yangkaiyue.java 
+13  51.0%  testdata\javaabctograde\gaoxinjian.java   testdata\javaabctograde\zhouton.java 
+14  48.0%  testdata\javaabctograde\gaoxinjian.java   testdata\javaabctograde\wangdongyue.java 
+15  48.0%  testdata\javaabctograde\gaoxinjian.java   testdata\javaabctograde\zhongyue.java 
+from stanford:http://moss.stanford.edu/results/961574766  Sat Oct 19 09:55:43 CST 2019
