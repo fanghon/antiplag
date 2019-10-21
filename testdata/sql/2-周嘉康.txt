@@ -1,0 +1,150 @@
+SQL> conn /as sysdba
+已连接。
+SQL> CREATE TABLESPACE stuScore_tbs
+  2  DATAFILE 'd:\data\stuScore001.dbf' SIZE 3M
+  3  AUTOEXTEND ON NEXT 512K MAXSIZE 10M;
+
+表空间已创建。 
+
+
+
+SQL> CREATE user ss_user
+  2  IDENTIFIED BY ss01
+  3  DEFAULT TABLESPACE stuScore_tbs;
+
+用户已创建。
+
+SQL> GRANT connect,resource TO ss_user;
+
+授权成功。
+ 
+
+
+SQL> CREATE TABLE student
+  2  (
+  3  sno char(5) primary key,
+  4  sname varchar2(20) not null,
+  5  ssex char(2) check(ssex in('男','女'))
+  6  );
+
+表已创建。
+
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  sno char(5) REFERENCES student(sno),
+  4  cname varchar2(20) not null,
+  5  score NUMBER(4,1) check(score between 0 and 100)
+  6  );
+
+表已创建。
+
+
+SQL> INSERT INTO student(sno,sname,ssex) VALUES('12201','张润发','男');
+
+已创建 1 行。
+
+SQL> INSERT INTO student(sno,sname,ssex) VALUES('12202','李洁','女');
+
+已创建 1 行。
+
+SQL> INSERT INTO student(sno,sname,ssex) VALUES('12203','王小丫','女');
+
+已创建 1 行。
+
+SQL> INSERT INTO course(sno,cname,score) VALUES('12201','软件测试','90');
+
+已创建 1 行。
+
+SQL> INSERT INTO course(sno,cname,score) VALUES('12201','Oracle应用','80');
+
+已创建 1 行。
+
+SQL> INSERT INTO course(sno,cname,score) VALUES('12202','Oracle应用','95');
+
+已创建 1 行。
+
+SQL> CREATE TABLE course_bak
+  2  AS
+  3  SELECT * FROM course;
+
+表已创建。
+
+SQL> UPDATE course SET score=score+2 WHERE sno='12201';
+
+已更新2行。
+
+SQL> DELETE course WHERE sno='12202';
+
+已删除 1 行。                
+
+SQL> SELECT sno,cname,score
+  2  FROM course
+  3  ORDER BY sno,score;
+
+SNO   CNAME                     SCORE                                           
+----- -------------------- ----------                                           
+12201 Oracle应用                   82                                           
+12201 软件测试                     92                                           
+12202 Oracle应用                   95                                           
+
+SQL> SELECT student.sno,sname,cname,score
+  2  FROM course,student
+  3  WHERE course.sno=student.sno;
+
+SNO   SNAME                CNAME                     SCORE                      
+----- -------------------- -------------------- ----------                      
+12201 张润发               Oracle应用                   82                      
+12201 张润发               软件测试                     92                      
+12202 李洁                 Oracle应用                   95                      
+
+
+SQL> CREATE OR REPLACE view v1
+  2  AS
+  3  SELECT * FROM student WHERE ssex='女';
+
+视图已创建。
+
+
+SQL> CREATE INDEX score_idx ON course(score desc);
+
+索引已创建。
+
+SQL> conn/as sysdba
+已连接。
+SQL> CREATE PUBLIC SYNONYM student FOR ss_user.student;
+
+同义词已创建。
+
+
+SQL> CREATE TABLE test
+  2  (
+  3  stuNo INTEGER,
+  4  stuName CHAR(8)
+  5  );
+
+表已创建。
+
+SQL> CREATE SEQUENCE sq1
+  2  start with 1
+  3  increment by 1;
+
+序列已创建。
+
+SQL> INSERT INTO test VALUES(sq1.nextval,'圆方');
+
+已创建 1 行。
+
+SQL> INSERT INTO test VALUES(sq1.nextval,'费用');
+
+已创建 1 行。
+
+SQL> SELECT * FROM test;
+
+     STUNO STUNAME                                                              
+---------- --------                                                             
+         1 圆方                                                                 
+         2 费用                                                                 
+
+SQL> spool off

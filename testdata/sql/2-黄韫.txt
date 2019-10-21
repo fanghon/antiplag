@@ -1,0 +1,257 @@
+SQL> conn/as sysdba
+已连接。
+SQL> create tablespace stuScore_tbs
+  2  datafile'd:\data\stuScore001.dbf' size 3M
+  3  autoextend on next 512K maxsize 10M;
+
+表空间已创建。
+
+SQL> create user ss_user identified by ss01
+  2  default stuScore_tbs;
+default stuScore_tbs
+        *
+第 2 行出现错误: 
+ORA-00921: 意外的 SQL 命令结尾 
+
+
+SQL> create user ss_user identified by ss01
+  2  default stuScore_tbs
+  3  
+SQL> create user ss_user identified by ss01 default tablespace stuScore_tbs
+  2  
+SQL> create user ss_user identified by ss01 default tablespace stuScore_tbs;
+
+用户已创建。
+
+SQL> grant connect,resource to ss_user;
+
+授权成功。
+
+SQL> create table course
+  2  
+SQL> create table student
+  2  (sno char(5) primary key
+  3  sname varchar2(20) not null
+  4  ssex char(2) check(ssex in('男','女'))>;
+(sno char(5) primary key
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> edit
+已写入 file afiedt.buf
+
+  1  create table student
+  2  (sno char(5) primary key,
+  3  sname varchar2(20) not null,
+  4* ssex char(2) check(ssex in('男','女')))
+SQL> /
+
+表已创建。
+
+SQL> create table course
+  2  (sno char(5) reference student(sno),
+  3  cname varchar2(20) not null,
+  4  score number(4,1) check(score>=0 and score<=100));
+(sno char(5) reference student(sno),
+             *
+第 2 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> edit
+已写入 file afiedt.buf
+
+  1  create table course
+  2  (sno char(5) REFERENCES student(sno),
+  3  cname varchar2(20) not null,
+  4* score number(4,1) check(score>=0 and score<=100))
+SQL> /
+
+表已创建。
+
+SQL> insert into student(sno,sname,ssex)value(12201,'张润发','男');
+insert into student(sno,sname,ssex)value(12201,'张润发','男')
+                                   *
+第 1 行出现错误: 
+ORA-00926: 缺失 VALUES 关键字 
+
+
+SQL> insert into student(sno,sname,ssex)values(12201,'张润发','男');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex)values(12202,'王小丫','女');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex)values(12203,'李洁','女');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score)values(12203,'软件测试','90');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex)values(12202,'Oracle','95');
+insert into student(sno,sname,ssex)values(12202,'Oracle','95')
+*
+第 1 行出现错误: 
+ORA-02290: 违反检查约束条件 (SYS.SYS_C005011) 
+
+
+SQL> insert into student(sno,sname,ssex)values(12202,"Oracle",'95');
+insert into student(sno,sname,ssex)values(12202,"Oracle",'95')
+                                                *
+第 1 行出现错误: 
+ORA-00984: 列在此处不允许 
+
+
+SQL> insert into student(sno,sname,ssex)values(12202,'Oracle','95');
+insert into student(sno,sname,ssex)values(12202,'Oracle','95')
+*
+第 1 行出现错误: 
+ORA-02290: 违反检查约束条件 (SYS.SYS_C005011) 
+
+
+SQL> insert into student(sno,cname,score)values(12202,'Oracle','95');
+insert into student(sno,cname,score)values(12202,'Oracle','95')
+                        *
+第 1 行出现错误: 
+ORA-00904: "CNAME": 标识符无效 
+
+
+SQL> insert into student(sno,cname,score)values(12202,'Oracle','95');
+insert into student(sno,cname,score)values(12202,'Oracle','95')
+                        *
+第 1 行出现错误: 
+ORA-00904: "CNAME": 标识符无效 
+
+
+SQL> drop soure
+  2  
+SQL> drop soure;
+drop soure
+     *
+第 1 行出现错误: 
+ORA-00950: 无效 DROP 选项 
+
+
+SQL> drop table coure;
+drop table coure
+           *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> drop table course;
+
+表已删除。
+
+SQL> create table course
+  2  (sno char(5) references student(sno),
+  3  cname varchar2(20) not null,
+  4  score number(4,1) check(score>=0 and score<=100)));
+score number(4,1) check(score>=0 and score<=100)))
+                                                 *
+第 4 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> edit
+已写入 file afiedt.buf
+
+  1  create table course
+  2  (sno char(5) REFERENCES student(sno),
+  3  cname varchar2(20) not null,
+  4* score number(4,1) check(score>=0 and score<=100))
+SQL> /
+
+表已创建。
+
+SQL> insert into course(sno,cname,score)values(12201,'软件测试',90);
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score)values(12201,'Oracle',80);
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score)values(12202,'Oracle',95);
+
+已创建 1 行。
+
+SQL> create table course_bak as select * from course;
+
+表已创建。
+
+SQL> updata course set score=score+2;
+SP2-0734: 未知的命令开头 "updata cou..." - 忽略了剩余的行。
+SQL> 
+SQL> 
+SQL> select student.sno,cname,score
+  2  from student join course on student.sno=course.sno
+  3  order by student.sno,score;
+
+SNO   CNAME                     SCORE                                           
+----- -------------------- ----------                                           
+12201 Oracle                       80                                           
+12201 软件测试                     90                                           
+12202 Oracle                       95                                           
+
+SQL> select student.sno,sname,cname,score
+  2  from student.sno=course.sno
+  3  
+SQL> select student.sno,sname,cname,score
+  2  from student.sno=course.sno;
+from student.sno=course.sno
+                *
+第 2 行出现错误: 
+ORA-00933: SQL 命令未正确结束 
+
+
+SQL> select student.sno,sname,cname,score
+  2  from student join score on student.sno=course.sno;
+from student join score on student.sno=course.sno
+                  *
+第 2 行出现错误: 
+ORA-04044: 此处不允许过程, 函数, 程序包或类型 
+
+
+SQL> select student.sno,sname,cname,score
+  2  from student join course on student.sno=course.sno;
+
+SNO   SNAME                CNAME                     SCORE                      
+----- -------------------- -------------------- ----------                      
+12201 张润发               软件测试                     90                      
+12201 张润发               Oracle                       80                      
+12202 王小丫               Oracle                       95                      
+
+SQL> conn/as sysdba
+已连接。
+SQL> grant create view to ss_user
+  2  
+SQL> grant create view to ss_user;
+
+授权成功。
+
+SQL> create view v1 as select * from student where ssex='女';
+
+视图已创建。
+
+SQL> grant create index to ss_user;
+grant create index to ss_user
+      *
+第 1 行出现错误: 
+ORA-00990: 权限缺失或无效 
+
+
+SQL> create index from ss_use course(score desc);
+create index from ss_use course(score desc)
+             *
+第 1 行出现错误: 
+ORA-00953: 索引名缺失或无效 
+
+
+SQL> spool off

@@ -1,0 +1,197 @@
+SQL> conn/as sysdba
+已连接。
+SQL> create tablespace stu_tbs
+  2  datafile 'd:/data/stu001.dbf' size 5m autoextend on
+  3  next 128k maxsize 20m;
+
+表空间已创建。
+
+SQL> create user stu_user
+  2  identified by sabc
+  3  default tablespace stu_tbs;
+
+用户已创建。
+
+SQL> grant connect,resource to stu_user;
+
+授权成功。
+
+SQL> conn stu_user/sabc
+已连接。
+SQL> creat table class
+SP2-0734: 未知的命令开头 "creat tabl..." - 忽略了剩余的行。
+SQL> create table class
+  2  (
+  3    cno char(4) primary key
+  4    cname varchar2(20) not null
+  5  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> create table class
+  2        (   cno char(4) primary key
+  3            cname varchar2(20) not null
+  4        );
+      (   cno char(4) primary key
+      *
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> create table class
+  2        (   cno char(4) primary key,
+  3            cname varchar2(20) not null,
+  4        );
+      )
+      *
+第 4 行出现错误: 
+ORA-00904: : 标识符无效 
+
+
+SQL> create table class
+  2        (   cno char(4) primary key,
+  3            cname varchar2(20) not null
+  4        );
+
+表已创建。
+
+SQL> create table student
+  2         (   sno char(5) primary key,
+  3             sname varchar2(20) not null,
+  4             ssex char(2) check( ssex in '男','女'),
+  5             sbirthday date not null,
+  6             con char(4) references key class(cno)
+  7         );
+           ssex char(2) check( ssex in '男','女'),
+                                           *
+第 4 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table student
+  2         (   sno char(5) primary key,
+  3             sname varchar2(20) not null,
+  4             ssex char(2) check( ssex in '男','女')),
+  5             sbirthday date not null,
+  6             con char(4) references key class(cno)
+  7         );
+           ssex char(2) check( ssex in '男','女')),
+                                           *
+第 4 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table student
+  2         (   sno char(5) primary key,
+  3             sname varchar2(20) not null,
+  4             ssex char(2) check( ssex in '男'),('女'),
+  5             sbirthday date not null,
+  6             con char(4) references key class(cno)
+  7         );
+           ssex char(2) check( ssex in '男'),('女'),
+                                             *
+第 4 行出现错误: 
+ORA-00904: : 标识符无效 
+
+
+SQL> create table student
+  2         (   sno char(5) primary key,
+  3             sname varchar2(20) not null,
+  4             ssex char(2) check( ssex in '男'),'女'),
+  5             sbirthday date not null,
+  6             con char(4) references key class(cno)
+  7         );
+           ssex char(2) check( ssex in '男'),'女'),
+                                             *
+第 4 行出现错误: 
+ORA-00904: : 标识符无效 
+
+
+SQL> create table student
+  2         (   sno char(5) primary key,
+  3             sname varchar2(20) not null,
+  4             ssex char(2) check( ssex in ('男','女')),
+  5             sbirthday date not null,
+  6             con char(4) references key class(cno)
+  7         );
+           con char(4) references key class(cno)
+                                      *
+第 6 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table student
+  2         (   sno char(5) primary key,
+  3             sname varchar2(20) not null,
+  4             ssex char(2) check( ssex in ('男','女')),
+  5             sbirthday date not null,
+  6             con char(4) references class(cno)
+  7         );
+
+表已创建。
+
+SQL> insert into class(cno,cname) values('1201','软件技术121301');
+
+已创建 1 行。
+
+SQL> insert into class(cno,cname) values('1202','软件开发121301');
+
+已创建 1 行。
+
+SQL> insert into class(cno,cname) values('1203','微软合作班121301');
+
+已创建 1 行。
+
+SQL> alter session set nls_date_format='yyyy-mm-dd';
+
+会话已更改。
+
+
+
+SQL> insert into student(sno,sname,ssex,sbirthday,cno) values('12201','张润发','男','1993-12-26','1202');
+insert into student(sno,sname,ssex,sbirthday,cno) values('12201','张润发','男','1993-12-26','1202')
+                                             *
+第 1 行出现错误: 
+ORA-00904: "CNO": 标识符无效 
+
+SQL> insert into student(sno,sname,ssex,sbirthday,cno) values('12202','李洁','女','1993-8-1','1202');
+
+SQL> insert into student(sno,sname,ssex,sbirthday,cno) values('12101','王小丫','女','1994-11-5','1201');
+
+
+SQL>create table studrnt_bak
+      as
+      select*
+      from student
+      where 1=2;
+  
+
+SQL>update student 
+    set sbirthday='1994-8-2'
+    where sno='12101';
+
+SQL> delect *
+     from class
+     where cno='1203';
+
+SQL>select sno,sname,student.cno
+    from student
+    order by cno desc;
+      
+SQL>select sno,sname,cname
+    from class join student on class.cno=student.cno;
+  
+SQL>create table v1
+    as
+    select *
+    from v1
+    where ssex='男';
+
+
+
+
+
+SQL> spool off

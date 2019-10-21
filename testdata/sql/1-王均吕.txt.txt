@@ -1,0 +1,215 @@
+SQL> conn / as sysdba
+已连接。
+SQL> create tablespae stu_tbs
+  2  datafile 'D:\Data\stu001.dbf' size 5M
+  3  autoextend to next 128k MAXSIZE 20M;
+create tablespae stu_tbs
+       *
+第 1 行出现错误: 
+ORA-00901: 无效 CREATE 命令 
+
+
+SQL> create tablespace stu_tbs
+  2  datafile 'D:\Data\stu001.dbf' size 5M
+  3  autoextend to next 128k MAXSIZE 20M;
+autoextend to next 128k MAXSIZE 20M
+           *
+第 3 行出现错误: 
+ORA-02491: AUTOEXTEND 子句中缺少要求的关键字 ON 或 OFF 
+
+
+SQL> create tablespae stu_tbs
+  2  datafile 'D:\Data\stu001.dbf' size 5M
+  3  autoextend  on next 128k MAXSIZE 20M;
+create tablespae stu_tbs
+       *
+第 1 行出现错误: 
+ORA-00901: 无效 CREATE 命令 
+
+
+SQL> create tablespace stu_tbs
+  2  datafile 'D:\Data\stu001.dbf' size 5M
+  3  autoextend  on next 128k MAXSIZE 20M;
+
+表空间已创建。
+
+SQL> create user stu_user identified by sabc default tablespace stu_tbs;
+
+用户已创建。
+
+SQL> grant connect,resource to stu_user
+  2  
+SQL> grant connect,resource to stu_user;
+
+授权成功。
+
+SQL> create table class
+  2  (
+  3  cno char(4) primary key,
+  4  cname varchar2(20) not null;
+cname varchar2(20) not null
+                          *
+第 4 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table class
+  2  (
+  3  cno char(4) primary key,
+  4  cname varchar2(20) not null
+  5  );
+
+表已创建。
+
+SQL> create table student
+  2  (
+  3  sno char(5) primary key,
+  4  sname varchar2(20) not null,
+  5  ssex char(2) check(ssex='男' or ssec='女'),
+  6  
+SQL> create table student
+  2  (
+  3  sno char(5) primary key,
+  4  sname varchar2(20) not null,
+  5  ssex char(2) check(ssex='男' or ssex='女'),
+  6  sbirthday date not null,
+  7  cno char(4) references class(cno)
+  8  );
+
+表已创建。
+
+SQL> insert into class(cno,cname) values('1201','软件技术121301');
+
+已创建 1 行。
+
+SQL> insert into class(cno,cname) values('1202','软件开发121301');
+
+已创建 1 行。
+
+SQL> insert into class(cno,cname) values('1203','微软合作班121301');
+
+已创建 1 行。
+
+SQL> alter session set nls_date_format='yyyy-mm-dd';
+
+会话已更改。
+
+SQL> insert into student(sno,sname,ssex,sbirthday,cno) values('12201','张润发','男','1993-12-26','1202');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex,sbirthday,cno) values('12202','李杰','女','1993-8-1','1202');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex,sbirthday,cno) values('12101','王小丫','女','1994-11-5','1201');
+
+已创建 1 行。
+
+SQL> create student_bak as select * from student where 1=2;
+create student_bak as select * from student where 1=2
+       *
+第 1 行出现错误: 
+ORA-00901: 无效 CREATE 命令 
+
+
+SQL> create student_bak as select * from student where '1'='2';
+create student_bak as select * from student where '1'='2'
+       *
+第 1 行出现错误: 
+ORA-00901: 无效 CREATE 命令 
+
+
+SQL> create table student_bak as select * from student where 1=2;
+
+表已创建。
+
+SQL> update sbirthday set '1994-8-1' where sno='12101';
+update sbirthday set '1994-8-1' where sno='12101'
+                     *
+第 1 行出现错误: 
+ORA-01747: 无效的用户.表.列, 表.列, 或列规格 
+
+
+SQL> update student set sbirthday='1994-8-1' where sno='12101';
+
+已更新 1 行。
+
+SQL> delete class where cno='1302';
+
+已删除0行。
+
+SQL> delete class where cno='1203';
+
+已删除 1 行。
+
+SQL> select sno,sname,cno
+  2  from student
+  3  order by cno desc;
+
+SNO   SNAME                CNO                                                  
+----- -------------------- ----                                                 
+12201 张润发               1202                                                 
+12202 李杰                 1202                                                 
+12101 王小丫               1201                                                 
+
+SQL> select sno,sname,cname
+  2  from class join student on class.cno=student.cno;
+
+SNO   SNAME                CNAME                                                
+----- -------------------- --------------------                                 
+12201 张润发               软件开发121301                                       
+12202 李杰                 软件开发121301                                       
+12101 王小丫               软件技术121301                                       
+
+SQL> create or replace view v1
+  2  as
+  3  select * from student where ssex='男';
+
+视图已创建。
+
+SQL> create index sbirthday_idx  on student(sbirthday);
+
+索引已创建。
+
+SQL> conn / as sysdba
+已连接。
+SQL> create or replace public synonym class for stu_user.class;
+
+同义词已创建。
+
+SQL> create table test
+  2  (
+  3  stuNo integer,
+  4  stuName char(8)
+  5  );
+
+表已创建。
+
+SQL> create sequene sq1;
+create sequene sq1
+       *
+第 1 行出现错误: 
+ORA-00901: 无效 CREATE 命令 
+
+
+SQL> create SEQUENCE sq1;
+
+序列已创建。
+
+SQL> insert into test(stuNo,stuName) values('12345','张三');
+
+已创建 1 行。
+
+SQL> insert into test(stuNo,stuName) values('12346','李四');
+
+已创建 1 行。
+
+SQL> select * from test;
+
+     STUNO STUNAME                                                              
+---------- --------                                                             
+     12345 张三                                                                 
+     12346 李四                                                                 
+
+SQL> spool off

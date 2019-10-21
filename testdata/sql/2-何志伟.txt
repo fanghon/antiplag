@@ -1,0 +1,302 @@
+SQL> conn / as sysdba
+已连接。
+SQL> CREATE TABLESPACE stuScore_tbs
+  2  DATAFILE 'd:\data\stuScore001.dbf' SIZE 3m REUSE
+  3  AUTOEXTEND IN NEXT 512k MAXSIZE 10m;
+AUTOEXTEND IN NEXT 512k MAXSIZE 10m
+           *
+第 3 行出现错误: 
+ORA-02491: AUTOEXTEND 子句中缺少要求的关键字 ON 或 OFF 
+
+
+SQL> CREATE TABLESPACE stuScore_tbs
+  2  DATAFILE 'd:\data\stuScore001.dbf' SIZE 3m REUSE
+  3  AUTOEXTEND ON NEXT 512k MAXSIZE 10m;
+
+表空间已创建。
+
+SQL> CREATE USER ss_user
+  2  IDENTIFIED BY ss01
+  3  DEFAULT TABLESPACE stuScore_tbs;
+
+用户已创建。
+
+SQL> GRANT connect,resource TO ss_user;
+
+授权成功。
+
+SQL> CREATE TABLE student
+  2  (
+  3  sno CHAR(5) PRIMARY KEY,
+  4  sname VARCHAR(20) NOT NULL,
+  5  ssex CHAR(2) CHECK IN ('男','女')
+  6  );
+ssex CHAR(2) CHECK IN ('男','女')
+                   *
+第 5 行出现错误: 
+ORA-00906: 缺失左括号 
+
+
+SQL> CREATE TABLE student
+  2  
+SQL> CREATE TABLE studen;t
+  2  ;
+CREATE TABLE studen;t
+                   *
+第 1 行出现错误: 
+ORA-00911: 无效字符 
+
+
+SQL> CREATE TABLE student
+  2  (
+  3  sno CHAR(5) PRIMARY KEY,
+  4  sname VARCHAR(20) NOT NULL,
+  5  ssex CHAR(2) CHECK ssex IN ('男','女')
+  6  );
+ssex CHAR(2) CHECK ssex IN ('男','女')
+                   *
+第 5 行出现错误: 
+ORA-00906: 缺失左括号 
+
+
+SQL> CREATE TABLE student
+  2  (
+  3  sno CHAR(5) PRIMARY KEY,
+  4  sname VARCHAR(20) NOT NULL,
+  5  ssex CHAR(2) VALUE CHECK IN ('男','女')
+  6  );
+ssex CHAR(2) VALUE CHECK IN ('男','女')
+             *
+第 5 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> CREATE TABLE student
+  2  (
+  3  sno CHAR(5) PRIMARY KEY,
+  4  sname VARCHAR(20) NOT NULL,
+  5  ssex CHAR(2)
+  6  );
+
+表已创建。
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES BY (sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES (sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES BY student(sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES IN (sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES IN (student)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES ON (sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES WITH (sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES student (sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno CHAR(5) REFERENCES student(sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1)
+  5  sno char(5) references student(sno)
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  cname VARCHAR(20) NOT NULL,
+  4  score NUMBER(4,1),
+  5  sno char(5) references student(sno)
+  6  );
+
+表已创建。
+
+SQL> INSERT INTO student
+  2  (sno,sname,ssex)
+  3  VALUES('12201','张润发','男')；
+  4  ／
+  5  
+SQL> 
+SQL> insert into student(sno,sname,ssex) values('12201','张润发','女');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex) values('12202','李洁','女');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex) values('12203','王小丫','男');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12201','软件测试',90);
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12201','Oracle应用',80);
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12202','Oracle应用',95);
+
+已创建 1 行。
+
+SQL> create table course_bak as select * from course;
+
+表已创建。
+
+SQL> update student where score+2
+  2  ;
+update student where score+2
+               *
+第 1 行出现错误: 
+ORA-00971: 缺失 SET 关键字 
+
+
+SQL> update student set score+2
+  2  where sno='12201';
+update student set score+2
+                        *
+第 1 行出现错误: 
+ORA-00927: 缺失等号 
+
+
+SQL> update student set score=score+2
+  2  where sno='12201';
+update student set score=score+2
+                         *
+第 1 行出现错误: 
+ORA-29900: 运算符连接不存在
+ORA-06553: PLS-306: 调用 'SCORE' 时参数个数或类型错误 
+
+
+SQL> update student set score='score+2'
+  2  where sno='12201';
+update student set score='score+2'
+                   *
+第 1 行出现错误: 
+ORA-29900: 运算符连接不存在
+ORA-06553: PLS-306: 调用 'SCORE' 时参数个数或类型错误 
+
+
+SQL> select sno cname score from student order by sno,score;
+select sno cname score from student order by sno,score
+                 *
+第 1 行出现错误: 
+ORA-00923: 未找到要求的 FROM 关键字 
+
+
+SQL> select sno,cname,score from course order by sno,score;
+
+SNO   CNAME                     SCORE                                           
+----- -------------------- ----------                                           
+12201 Oracle应用                   80                                           
+12201 软件测试                     90                                           
+12202 Oracle应用                   95                                           
+
+SQL> select sno,sname,cname,score from student join course on student.sno=course,sno;
+select sno,sname,cname,score from student join course on student.sno=course,sno
+                                                                            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> spool off

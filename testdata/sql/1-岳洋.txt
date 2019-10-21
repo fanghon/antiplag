@@ -1,0 +1,293 @@
+SQL> create tablespace stu_tbs
+  2  datafile 'd:\data\stu001.dbf' size 5M
+  3  autoextend on next 128K maxsize 20M;
+SP2-0640: 未连接
+SQL> conn / as sysdba
+已连接。
+SQL> create tablespaces stu_tbs
+  2  datafile 'd:\data\stu001.dbf' size 5M
+  3  autoextend on next 128K maxsize 20M;
+create tablespaces stu_tbs
+       *
+第 1 行出现错误: 
+ORA-00901: 无效 CREATE 命令 
+
+
+SQL> create tablespace stu_tbs
+  2  datafile 'd:\data\stu001.dbf' size 5M
+  3  autoextend on next 128K maxsize 20M;
+
+表空间已创建。
+
+SQL> create user stu_user identified by sabc
+  2  default tablespace stu_tbs;
+
+用户已创建。
+
+SQL> grant connect,resource to stu_user;
+
+授权成功。
+
+SQL> conn stu_user/sabc;
+已连接。
+SQL> create table class
+  2  (       cno             CHAR(4)             primary key,
+  3  cname                   VARCHAR2(20)         NOT NULL
+  4  );
+
+表已创建。
+
+SQL> CREATE TABLE student
+  2  (    sno            CHAR(5)             PRIMARY KEY,
+  3       sname          VARCHAR2(20)        NOT NULL,
+  4       ssex           CHAR(2)             CHECK(ssex IN ('男','女'))
+  5       sbirthday      DATE                 not null
+  6       con            CHAR(4)             references class(cno)
+  7  );
+(    sno            CHAR(5)             PRIMARY KEY,
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE TABLE student
+  2  (    sno            CHAR(5)             PRIMARY KEY,
+  3       sname          VARCHAR2(20)        NOT NULL,
+  4       ssex           CHAR(2)             CHECK(ssex IN ('男','女')),
+  5       sbirthday      DATE                 not null,
+  6       con            CHAR(4)             references class(cno)
+  7  );
+
+表已创建。
+
+SQL> insert into class(cno,cname) valuse('1201','软件技术121301');
+insert into class(cno,cname) valuse('1201','软件技术121301')
+                             *
+第 1 行出现错误: 
+ORA-00926: 缺失 VALUES 关键字 
+
+
+SQL> insert into class(cno,cname) values('1201','软件技术121301');
+
+已创建 1 行。
+
+SQL> insert into class(cno,cname) values('1202','软件技术121301');
+
+已创建 1 行。
+
+SQL> insert into class(cno,cname) values('1203','软件技术121301');
+
+已创建 1 行。
+
+SQL> alter session set nls_date_format='yyyy-mm-dd';
+
+会话已更改。
+
+SQL> insert into class(sno,sname,ssex,sbirthday,cno) values('12201','男','1993-12-26','1202');
+insert into class(sno,sname,ssex,sbirthday,cno) values('12201','男','1993-12-26','1202')
+                                                *
+第 1 行出现错误: 
+ORA-00947: 没有足够的值 
+
+
+SQL> insert into student(sno,sname,ssex,sbirthday,cno) values('12201','男','1993-12-26','1202');
+insert into student(sno,sname,ssex,sbirthday,cno) values('12201','男','1993-12-26','1202')
+                                                  *
+第 1 行出现错误: 
+ORA-00947: 没有足够的值 
+
+
+SQL> edit
+已写入 file afiedt.buf
+
+  1* insert into student(sno,sname,ssex,sbirthday,cno) values('12201','男','1993-12-26','1202')
+SQL> /
+insert into student(sno,sname,ssex,sbirthday,cno) values('12201','男','1993-12-26','1202')
+                                                  *
+第 1 行出现错误: 
+ORA-00947: 没有足够的值 
+
+
+SQL> create table student_bak as select * from student where 1=2;
+
+表已创建。
+
+SQL> update set sbirthday='1994-8-1'
+  2  where sno='12101';
+update set sbirthday='1994-8-1'
+       *
+第 1 行出现错误: 
+ORA-00903: 表名无效 
+
+
+SQL> update sbirthday set sbirthday='1994-8-1'
+  2  where sno='12101';
+update sbirthday set sbirthday='1994-8-1'
+       *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> delect from class
+SP2-0734: 未知的命令开头 "delect fro..." - 忽略了剩余的行。
+SQL> delete from class
+  2  where cno='1203';
+
+已删除 1 行。
+
+SQL> select sno,sname,cno
+  2  from student
+  3  order by cno;
+select sno,sname,cno
+                 *
+第 1 行出现错误: 
+ORA-00904: "CNO": 标识符无效 
+
+
+SQL> select sno,sname,con
+  2  from student
+  3  order by con;
+
+未选定行
+
+SQL> delete table student;
+delete table student
+       *
+第 1 行出现错误: 
+ORA-00903: 表名无效 
+
+
+SQL> insert into student(sno,sname,ssex,sbirthday,con) values('12201','男','1993-12-26','1202');
+insert into student(sno,sname,ssex,sbirthday,con) values('12201','男','1993-12-26','1202')
+                                                  *
+第 1 行出现错误: 
+ORA-00947: 没有足够的值 
+
+
+SQL> select * from student;
+
+未选定行
+
+SQL> alter session set nls_date_format='yyyy-mm-dd';
+
+会话已更改。
+
+SQL> insert into class(sno,sname,ssex,sbirthday,con) values('12201','张润发','男','1993-12-26','1202');
+insert into class(sno,sname,ssex,sbirthday,con) values('12201','张润发','男','1993-12-26','1202')
+                                           *
+第 1 行出现错误: 
+ORA-00904: "CON": 标识符无效 
+
+
+SQL> insert into class(sno,sname,ssex,sbirthday,cno) values('12201','张润发','男','1993-12-26','1202');
+insert into class(sno,sname,ssex,sbirthday,cno) values('12201','张润发','男','1993-12-26','1202')
+                                 *
+第 1 行出现错误: 
+ORA-00904: "SBIRTHDAY": 标识符无效 
+
+
+SQL> conn / as sysdba
+已连接。
+SQL> grant create view to stu_user;
+
+授权成功。
+
+SQL> conn stu_user/sabc;
+已连接。
+SQL> create view v1 as select * from student where ssex='男';
+
+视图已创建。
+
+SQL> create index sbirthday_idx on student(sbirthday dasc);
+create index sbirthday_idx on student(sbirthday dasc)
+                                                *
+第 1 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create index sbirthday_idx on student(sbirthday desc);
+
+索引已创建。
+
+SQL> conn / as sysdba;
+已连接。
+SQL> create pablic synonym class for stu_user.class;
+create pablic synonym class for stu_user.class
+       *
+第 1 行出现错误: 
+ORA-00901: 无效 CREATE 命令 
+
+
+SQL> create public synonym class for stu_user.class;
+
+同义词已创建。
+
+SQL> create table text
+  2  (stuNo    integer
+  3   stuName    char(8)
+  4  );
+(stuNo    integer
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> conn stu_user/sabc
+已连接。
+SQL> create table text
+  2  (stuNo    integer,
+  3   stuName    char(8)
+  4  );
+
+表已创建。
+
+SQL> create sequence sq1;
+
+序列已创建。
+
+SQL> inster into test(stuNo,stuName) values (sq1.nextnal,'张三');
+SP2-0734: 未知的命令开头 "inster int..." - 忽略了剩余的行。
+SQL> insert into test(stuNo,stuName) values (sq1.nextnal,'张三');
+insert into test(stuNo,stuName) values (sq1.nextnal,'张三')
+            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> insert into test(stuNo,stuName) values (sq1.nextnal,'张');
+insert into test(stuNo,stuName) values (sq1.nextnal,'张')
+            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> insert into test(stuNo,stuName) values ('01','张');
+insert into test(stuNo,stuName) values ('01','张')
+            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> insert into test(stuNo,stuName) values (sq1.nextval,'张');
+insert into test(stuNo,stuName) values (sq1.nextval,'张')
+            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> insert into text(stuNo,stuName) values (sq1.nextval,'张');
+
+已创建 1 行。
+
+SQL> insert into text(stuNo,stuName) values (sq1.nextval,'李');
+
+已创建 1 行。
+
+SQL> select * from text;
+
+     STUNO STUNAME                                                              
+---------- --------                                                             
+         1 张                                                                   
+         2 李                                                                   
+
+SQL> spool off

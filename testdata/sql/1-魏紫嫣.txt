@@ -1,0 +1,149 @@
+SQL> conn/as sysdba
+已连接。
+SQL> CREATE TABLESPACE stu_tbs
+  2  DATAFILE 'D:\Data\stu001.dbf' SIZE 5M
+  3  AUTOEXTEND ON NEXT 128K MAXSIZE 20M;
+
+表空间已创建。
+
+
+SQL> CREATE USER stu_user
+  2  IDENTIFIED BY sabc
+  3  DEFAULT TABLESPACE stu_tbs;
+
+用户已创建。
+
+SQL> GRANT connect,resource to stu_user;
+
+授权成功。
+
+SQL> conn stu_user/sabc
+已连接。
+
+SQL> CREATE TABLE class
+  2  (
+  3  cno CHAR(4) PRIMARY KEY,
+  4  cname VARCHAR2(20) NOT NULL
+  5  );
+
+表已创建。
+
+SQL> CREATE TABLE student
+  2  (
+  3  sno CHAR(5) PRIMARY KEY,
+  4  sname VARCHAR2(20) NOT NULL,
+  5  ssex CHAR(2) CHECK(ssex in('男','女')),
+  6  sbirthday DATE NOT NULL,
+  7  cno CHAR(4) REFERENCES class(cno)
+  8  );
+
+表已创建。
+
+SQL> INSERT INTO class(cno,cname) VALUES('1201','软件技术121301');
+
+已创建 1 行。
+
+SQL> INSERT INTO class(cno,cname) VALUES('1202','软件开发121301');
+
+已创建 1 行。
+
+SQL> INSERT INTO class(cno,cname) VALUES('1203','微软合作班121301');
+
+已创建 1 行。
+
+
+SQL> alter session set nls_data_format='yyyy-mm-dd'; 
+
+
+SQL> INSERT INTO class(sno,sname,ssex,sbirthday,cno)
+  2  VALUES('12201','张润发','男','1993-12-26','1202');
+
+已创建 1 行。
+
+
+SQL> INSERT INTO class(sno,sname,ssex,sbirthday,cno)
+  2  VALUES('12202','李洁','女','1993-8-1','1202');
+
+已创建 1 行。
+
+SQL> INSERT INTO class(sno,sname,ssex,sbirthday,cno)
+  2  VALUES('12203','王小丫','女','1994-11-5','1201');
+
+已创建 1 行。
+
+SQL> CREATE TABLE student_bak
+  2  AS
+  3  SELECT * FROM student WHERE 1=2;
+
+表已创建。
+
+
+SQL> UPDATA student SET sbirthday='1994-8-1' WHERE sno='12101';
+
+SQL> DELETE FROM class WHERE cno='1203';
+
+已删除 1 行。
+
+
+SQL> select sno,sname,cno
+  2  from student
+  3  order by cno;
+
+未选定行
+
+SQL> select sno,sname,cname
+  2  from class join student on class.cno=student.cno;
+
+未选定行
+
+SQL> create or replace view v1
+  2  as
+  3  select * from student;
+
+视图已创建。
+
+SQL> create index sbirthday_idx on student(sbirthday DESC);
+
+索引已创建。
+
+SQL> conn/as sysdba
+已连接。
+SQL> create or replace PUBLIC SYNONYM class for stu_user.class;
+
+同义词已创建。
+
+SQL> create table test
+  2  (
+  3  stuNo integer PRIMARY KEY,
+  4  stuName char(8)
+  5  );
+
+表已创建。
+
+SQL> create sequence sq1;
+
+序列已创建。
+
+SQL> insert into test(stuNo,stuName) VALUES(sq1.next,'张三');
+insert into test(stuNo,stuName) VALUES(sq1.next,'张三')
+                                           *
+第 1 行出现错误: 
+ORA-00984: 列在此处不允许 
+
+
+SQL> insert into test(stuNo,stuName) VALUES(sq1.nextval,'张三');
+
+已创建 1 行。
+
+SQL> insert into test(stuNo,stuName) VALUES(sq1.nextval,'李四');
+
+已创建 1 行。
+
+SQL> select * from test;
+
+     STUNO STUNAME                                                              
+---------- --------                                                             
+         1 张三                                                                 
+         2 李四                                                                 
+
+SQL> spool off

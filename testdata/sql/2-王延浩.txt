@@ -1,0 +1,147 @@
+SQL> conn /as sysdba
+已连接。
+SQL> create tablespace stuScore_tbs
+  2  datafile 'd:\data\stuScore001.dbf' size 3M
+  3  autoextend on next 512K maxsize 10M;
+
+表空间已创建。
+
+SQL> create user ss_user
+  2  identified by ss01
+  3  default tablespace stuScore_tbs;
+
+用户已创建。
+
+SQL> grant connect,resource to ss_user;
+
+授权成功。
+
+SQL> conn ss_user/ss01
+已连接。
+SQL> create table student
+  2  (sno char(5) primary key,
+  3  sanme varchar2(20) not null,
+  4  ssex char(2) check(ssex in('男','女'))
+  5  );
+
+表已创建。
+
+SQL> create table course
+  2  (sno char(5) references student(sno),
+  3  cname varchar2(20) not null,
+  4  score number(4,1) check(score between 1 and 100)
+  5  );
+
+表已创建。
+
+
+SQL> insert into student(sno,sanme,ssex) values('12201','张润发','男');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sanme,ssex) values('12202','李洁','女');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sanme,ssex) values('12203','王小丫','女');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12201','软件测试',90);
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12201','orcale应用',80);
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12202','orcale应用',95);
+
+已创建 1 行。
+
+SQL> create table course_bak as select * from course;
+
+表已创建。
+
+
+SQL> update course set  score=score+2 where sno='12201';
+
+已更新2行。
+
+
+
+SQL> delete from course where sno='12202';
+
+已删除 1 行。
+
+
+
+SQL> select sno,cname,score from course
+  2  order by sno,score;
+
+SNO   CNAME                     SCORE                                           
+----- -------------------- ----------                                           
+12201 orcale应用                   82                                           
+12201 软件测试                     92                                           
+
+SQL> select student.sno,sanme,cname,score
+  2  from student join course on student.sno=course.sno;
+
+SNO   SANME                CNAME                     SCORE                      
+----- -------------------- -------------------- ----------                      
+12201 张润发               orcale应用                   82                      
+12201 张润发               软件测试                     92                      
+
+SQL> conn /as sysdba
+已连接。
+SQL> grant create view to ss_user;
+
+授权成功。
+
+SQL> conn ss_user/ss01
+已连接。
+SQL> create view v1 as select * from student where ssex='女';
+
+视图已创建。
+
+
+
+SQL> create index score_idx on course(score desc);
+
+索引已创建。
+
+SQL> conn /as sysdba
+已连接。
+
+
+SQL> create or replace public synonym student for ss_user.student;
+
+同义词已创建。
+
+SQL> create table test
+  2  (stuNo integer,
+  3  stuName char(8));
+
+表已创建。
+
+
+SQL> create sequence sq1;
+
+序列已创建。
+
+SQL> insert into test(stuNo,stuName) values(sq1.nextval,'王二');
+
+已创建 1 行。
+
+SQL> insert into test(stuNo,stuName) values(sq1.nextval,'小伙伴');
+
+已创建 1 行。
+
+SQL> select * from test;
+
+     STUNO STUNAME                                                              
+---------- --------                                                             
+         1 王二                                                                 
+         2 小伙伴                                                               
+
+SQL> spool off

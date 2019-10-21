@@ -1,0 +1,142 @@
+SQL> conn / as sysdba
+已连接。
+SQL> CREATE TABLESPACE stu_tbs
+  2  DATAFILE 'd:\Data\stu001.dbf' SIZE 5M AUTOEXTEND ON
+  3  NEXT 128K MAXSIZE 20M;
+
+表空间已创建。
+
+SQL> CREATE USER stu_user IDENTIFIED BY sabc DEFAULT TABLESPACE stu_tbs;
+
+用户已创建。
+
+SQL> GRANT connect,resource TO  stu_user;
+
+授权成功。
+
+SQL> conn stu_user/sabc
+已连接。
+SQL> CREATE TABLE class
+  2  (
+  3  cno CHAR(4) PRIMARY KEY,
+  4  cname VARCHAR2(20) NOT NULL
+  5  );
+
+表已创建。
+
+SQL> CREATE TABLE student
+  2  (
+  3  sno CHAR(5) PRIMARY KEY,
+  4  sname VARCHAR2(20) NOT NULL,
+  5  ssex CHAR(2) CHECK(SSEX IN('男','女')),
+  6  sbirthday DATE NOT NULL,
+  7  cno CHAR(4) REFERENCES class(cno)
+  8  );
+
+表已创建。
+
+SQL> INSERT INTO class(cno,cname) VALUES('1201','软件技术121301');
+
+已创建 1 行。
+
+SQL> INSERT INTO class(cno,cname) VALUES('1202','软件开发121301');
+
+已创建 1 行。
+
+SQL> INSERT INTO class(cno,cname) VALUES('1203','微软合作班121301');
+
+已创建 1 行。
+
+SQL> INSERT INTO student(sno,sname,ssex,sbirthday,cno)
+  2  VALUES('12201','张润发','男',to_date('1993-12-26','yyyy-mm-dd'),'1202');
+
+已创建 1 行。
+
+SQL> INSERT INTO student(sno,sname,ssex,sbirthday,cno)
+  2  VALUES('12202','李洁','女',to_date('1993-8-1','yyyy-mm-dd'),'1202');
+
+已创建 1 行。
+
+SQL> INSERT INTO student(sno,sname,ssex,sbirthday,cno)
+  2  VALUES('12101','王小丫','女',to_date('1994-11-5','yyyy-mm-dd'),'1201');
+
+已创建 1 行。
+
+SQL> CREATE TABLE student_bak
+  2  AS
+  3  SELECT * FROM student WHERE 1=2;
+
+表已创建。
+
+SQL> alter session set nls_date_format='yyyy-mm-dd';
+
+会话已更改。
+
+SQL> UPDATE student SET sbirthday='1994-8-1' WHERE sno='12101';
+
+已更新 1 行。
+
+SQL> DELETE FROM class WHERE cno='1203';
+
+已删除 1 行。
+
+SQL> SELECT sno 学号,sname 姓名,cno 班级编号
+  2  FROM student
+  3  ORDER BY cno;
+
+学号  姓名                 班级                                                 
+----- -------------------- ----                                                 
+12101 王小丫               1201                                                 
+12201 张润发               1202                                                 
+12202 李洁                 1202                                                 
+
+SQL> SELECT student.sno 学号,sname 姓名,cname 班级名称
+  2  FROM student JOIN class ON student.cno=class.cno
+  3  ;
+
+学号  姓名                 班级名称                                             
+----- -------------------- --------------------                                 
+12201 张润发               软件开发121301                                       
+12202 李洁                 软件开发121301                                       
+12101 王小丫               软件技术121301                                       
+
+SQL> CREATE OR REPLACE view v1
+  2  AS
+  3  SELECT * FROM student WHERE ssex='男';
+
+视图已创建。
+
+SQL> CREATE INDEX sbirthday_idx ON student(sbirthday DESC);
+
+索引已创建。
+
+SQL> conn / as sys
+已连接。
+SQL> CREATE OR REPLACE PUBLIC SYNONYM class FOR stu_user.class;
+
+同义词已创建。
+
+SQL> CREATE TABLE test(stuNo integer,stuName char(8));
+
+表已创建。
+
+SQL> CREATE SEQUENCE sq1;
+
+序列已创建。
+
+SQL> INSERT INTO test(stuNo,stuName) VALUES(sq1.nextval,'张三');
+
+已创建 1 行。
+
+SQL> INSERT INTO test(stuNo,stuName) VALUES(sq1.nextval,'李四');
+
+已创建 1 行。
+
+SQL> SELECT * FROM test;
+
+     STUNO STUNAME                                                              
+---------- --------                                                             
+         1 张三                                                                 
+         2 李四                                                                 
+
+SQL> spool off

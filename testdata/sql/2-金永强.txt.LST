@@ -1,0 +1,225 @@
+SQL> conn  /as  sysdba
+已连接。
+SQL> CREATE  TABLESPACE  stuScore_tbs
+  2  DATAFILE  'd:\data\stuScore001.dbf' SIZE 3M
+  3  AUTOEXTEND  ON  NEXT  512K  MAXSIZE 10M;
+
+表空间已创建。
+
+SQL> CREATE  USER  ss_user  IDENTIFIED  BY  ss01
+  2  DEFAULT  TABLESPACE  stuScore_tbs;
+
+用户已创建。
+
+SQL> GRANT  connect,resource  to  ss_user;
+
+授权成功。
+
+SQL> conn  ss_user  /ss01
+已连接。
+SQL> CREATE TABLE  course
+  2  J
+  3  (;);
+J
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE  TABLE  student
+  2  (  sno  CHAR(5)  PRIMARY KEY,
+  3  sname  VARCHAR2(20)  NOT NULL,
+  4  ssex  CHAR(2)  CHECK(ssex  in  ('男','女'))  );
+
+表已创建。
+
+SQL>  CREATE  TABLE  course
+  2  ( sno  CHAR(5)  REFERENCE  student(sno),
+  3   cname  VARCHAR2(20)  NOT  NULL,
+  4   score  NUMBER(4,1)  CHECK(between 0  and  100 )  );
+( sno  CHAR(5)  REFERENCE  student(sno),
+                *
+第 2 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL>  CREATE  TABLE  course
+  2  ( sno  CHAR(5)  REFERENCES  student(sno),
+  3   cname  VARCHAR2(20)  NOT  NULL,
+  4   score  NUMBER(4,1)  CHECK(between 0  and  100 )  );
+ score  NUMBER(4,1)  CHECK(between 0  and  100 )  )
+                           *
+第 4 行出现错误: 
+ORA-00936: 缺失表达式 
+
+
+SQL>  CREATE  TABLE  course
+  2  ( sno  CHAR(5)  REFERENCES  student(sno),
+  3   cname  VARCHAR2(20)  NOT  NULL,
+  4   score  NUMBER(4,1)  CHECK( score  between 0  and  100 )  );
+
+表已创建。
+
+SQL> INSERT  INTO  student(sno,sname,ssex)  values ('12201','张润发','男');
+
+已创建 1 行。
+
+SQL> INSERT  INTO  student(sno,sname,ssex)  values ('12202','李洁','女');
+
+已创建 1 行。
+
+SQL> INSERT  INTO  student(sno,sname,ssex)  values ('12203','王小丫','女');
+
+已创建 1 行。
+
+SQL> INSERT  INTO  course(sno,cname,score)  values ('12201','软件测试',90);
+
+已创建 1 行。
+
+SQL> INSERT  INTO  course(sno,cname,score)  values ('12201','Oracle应用',80);
+
+已创建 1 行。
+
+SQL> INSERT  INTO  course(sno,cname,score)  values ('12202','Oracle应用',95);
+
+已创建 1 行。
+
+SQL> CREATE  TABLE  course_bak  SELECT  *  FROM  course;
+CREATE  TABLE  course_bak  SELECT  *  FROM  course
+                           *
+第 1 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE  TABLE  course_bak where SELECT  *  FROM  course;
+CREATE  TABLE  course_bak where SELECT  *  FROM  course
+                          *
+第 1 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> CREATE  TABLE  course_bak   as SELECT  *  FROM  course;
+
+表已创建。
+
+SQL> UPDATE  score  SET  score=score+2
+  2  where  sno='12201';
+UPDATE  score  SET  score=score+2
+        *
+第 1 行出现错误: 
+ORA-04044: 此处不允许过程, 函数, 程序包或类型 
+
+
+SQL> UPDATE  course  SET  score=score+2
+  2  where  sno='12201';
+
+已更新2行。
+
+SQL> delete  from  course
+  2  where  sno='12202';
+
+已删除 1 行。
+
+SQL> SELECT  student.sno,cname,score
+  2  from  student  join  course  on student.sno=course.sno
+  3  order  by  sno,score;
+
+SNO   CNAME                     SCORE                                           
+----- -------------------- ----------                                           
+12201 Oracle应用                   82                                           
+12201 软件测试                     92                                           
+
+SQL> select  student.sno,sname,cname,score
+  2  from  student  join  course  on student.sno=course.sno;
+
+SNO   SNAME                CNAME                     SCORE                      
+----- -------------------- -------------------- ----------                      
+12201 张润发               Oracle应用                   82                      
+12201 张润发               软件测试                     92                      
+
+SQL> conn  /as  sysdba
+已连接。
+SQL> GRANT  create  view  to  ss_user;
+
+授权成功。
+
+SQL> conn  ss_user /ss01
+已连接。
+SQL> create  view  v1
+  2  as
+  3  select  *  from  student
+  4  where  ssex='女';
+
+视图已创建。
+
+SQL> craete  INDEX  score_idx  ON  course(asc);
+SP2-0734: 未知的命令开头 "craete  IN..." - 忽略了剩余的行。
+SQL> craete  INDEX  score_idx  ON  course( score  asc);
+SP2-0734: 未知的命令开头 "craete  IN..." - 忽略了剩余的行。
+SQL> CREATE  INDEX  score_idx  ON  course( score  DESC);
+
+索引已创建。
+
+SQL> CONN  /AS  SYSDBA
+已连接。
+SQL> CREATE  PUBLIC  synonym  student  for  ss_user.student;
+
+同义词已创建。
+
+SQL> conn  ss_user/ss01;
+已连接。
+SQL> create  table  test(
+  2  stuNo  integer,
+  3  stuName  char(8) );
+
+表已创建。
+
+SQL> create  sequence  sq1;
+
+序列已创建。
+
+SQL> insert  into  tset(stuNo,stuName) values('01','张三')；
+  2  的;
+insert  into  tset(stuNo,stuName) values('01','张三')；
+                                                     *
+第 1 行出现错误: 
+ORA-00911: 无效字符 
+
+
+SQL> insert  into  tset(stuNo,stuName) values('01','张三');
+insert  into  tset(stuNo,stuName) values('01','张三')
+              *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> insert  into test(stuNo,stuName) values('01','张三');
+
+已创建 1 行。
+
+SQL> insert  into test(stuNo,stuName) values('nextval','李四');
+insert  into test(stuNo,stuName) values('nextval','李四')
+                                        *
+第 1 行出现错误: 
+ORA-01722: 无效数字 
+
+
+SQL> insert  into test(stuNo,stuName) values('nextval','张三');
+insert  into test(stuNo,stuName) values('nextval','张三')
+                                        *
+第 1 行出现错误: 
+ORA-01722: 无效数字 
+
+
+SQL> insert  into test(stuNo,stuName) values(sq1.nextval,'李四');
+
+已创建 1 行。
+
+SQL> select  *  from  test;
+
+     STUNO STUNAME                                                              
+---------- --------                                                             
+         1 张三                                                                 
+         1 李四                                                                 
+
+SQL> spool  off

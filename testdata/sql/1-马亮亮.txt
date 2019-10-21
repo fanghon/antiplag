@@ -1,0 +1,307 @@
+SQL> conn / as sysdba
+已连接。
+SQL> create tablespace stuScore_tbs
+  2  datafile 'D:\data\stuScore001.dbf' size 3M
+  3  autoextend on next 512K maxsize 10M;
+
+表空间已创建。
+
+SQL> create user ss_user identified by ss01 default tablespace stuScore_tbs;
+
+用户已创建。
+
+SQL> grant connect,resource to ss_user;
+
+授权成功。
+
+SQL> conn ss_user/ss01
+已连接。
+SQL> create table student
+  2  (
+  3  sno char(5) primary key,
+  4  sname varchar2(20) not null,
+  5  ssex char(2) check(ssex in('男'or'女'))
+  6  )
+  7  ;
+ssex char(2) check(ssex in('男'or'女'))
+                               *
+第 5 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table student
+  2  (
+  3  sno char(5) primary key,
+  4  sname varchar2(20) not null,
+  5  ssex char(2) check(ssex in('男'or'女')));
+ssex char(2) check(ssex in('男'or'女')))
+                               *
+第 5 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table student
+  2  (
+  3  sno char(5) primary key,
+  4  sname varchar2(20) not null,
+  5  ssex char(2) check(ssex='男'or ssex='女');
+ssex char(2) check(ssex='男'or ssex='女')
+                                        *
+第 5 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table student
+  2  (
+  3  sno char(5) primary key,
+  4  sname varchar2(20) not null,
+  5  ssex char(2) check(ssex='男'or ssex='女');
+ssex char(2) check(ssex='男'or ssex='女')
+                                        *
+第 5 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table student
+  2  (
+  3  sno char(5) primary key,
+  4  sname varchar2(20) not null,
+  5  ssex char(2) check(ssex='男'or ssex='女'));
+
+表已创建。
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno);
+sno char(5) references student(sno)
+                                  *
+第 3 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno)
+  4  cname varchar2(20) not null
+  5  score number(4,1) between 0 and 100);
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno)
+  4  cname varchar2(20) not null
+  5  score number(4,1) between 0 and 100
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno)
+  4  cname varchar2(20) not null
+  5  score number(4,1) between 0 and 100
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno)
+  4  cname varchar2(20) not null
+  5  score number(4,1) between 0 and 100
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno)
+  4  ,
+  5  cname varchar2(20) not mull,
+  6  score number(4,1) between 0 and 100);
+cname varchar2(20) not mull,
+                       *
+第 5 行出现错误: 
+ORA-00905: 缺失关键字 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno),
+  4  cname varchar2(20) not null,
+  5  score number(4,1) betweeen 0 and 100);
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno),
+  4  cname varchar2(20) not null,
+  5  score number(4,1) betweeen 0 and 100
+  6  );
+(
+*
+第 2 行出现错误: 
+ORA-00922: 选项缺失或无效 
+
+
+SQL> insert into student(sno,sname,ssex) values('12201','张润发','男');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex) values('12202','李洁','女');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex) values('12203','王小丫','女');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12201','软件测试','90');
+insert into course(sno,cname,score) values('12201','软件测试','90')
+            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> insert into course(sno,cname) values('12201','软件测试');
+insert into course(sno,cname) values('12201','软件测试')
+            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> create table score
+  2  (
+  3  ;
+
+*
+第 3 行出现错误: 
+ORA-00921: 意外的 SQL 命令结尾 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno),
+  4  cname varchar2(20) not null,
+  5  score number(4,1) between 0 and 100
+  6  );
+score number(4,1) between 0 and 100
+                  *
+第 5 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno),
+  4  cname varchar2(20) not null,
+  5  score number(4,1)  check(between 0 and 100)
+  6  );
+score number(4,1)  check(between 0 and 100)
+                         *
+第 5 行出现错误: 
+ORA-00936: 缺失表达式 
+
+
+SQL> create table course
+  2  (
+  3  sno char(5) references student(sno),
+  4  cname varchar2(20) not null,
+  5  score number(4,1)  check(score between 0 and 100)
+  6  );
+
+表已创建。
+
+SQL> insert into corse(sno,cname,score) values('12201','软件测试','90');
+insert into corse(sno,cname,score) values('12201','软件测试','90')
+            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> insert into course(sno,cname,score) values('12201','软件测试','90');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12201','ORacle','80');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values('12202','ORacle应用','95');
+
+已创建 1 行。
+
+SQL> create table course_bak as select * from course;
+
+表已创建。
+
+SQL> update course set score=score+2;
+
+已更新3行。
+
+SQL> delete score where sno='12202';
+delete score where sno='12202'
+       *
+第 1 行出现错误: 
+ORA-04044: 此处不允许过程, 函数, 程序包或类型 
+
+
+SQL> delete course where sno='12202';
+
+已删除 1 行。
+
+SQL> select sno,cname,score
+  2  from course
+  3  order by sno,score asc;
+
+SNO   CNAME                     SCORE                                           
+----- -------------------- ----------                                           
+12201 ORacle                       82                                           
+12201 软件测试                     92                                           
+
+SQL> select student.sno,sname,cname,score
+  2  from course,student
+  3  where student.sno=course.sno;
+
+SNO   SNAME                CNAME                     SCORE                      
+----- -------------------- -------------------- ----------                      
+12201 张润发               ORacle                       82                      
+12201 张润发               软件测试                     92                      
+
+SQL> create or replace view v1
+  2  as
+  3  select * from student where ssex='女';
+
+视图已创建。
+
+SQL> create index score_idx for(score desc);
+create index score_idx for(score desc)
+                       *
+第 1 行出现错误: 
+ORA-00969: 缺失 ON 关键字 
+
+
+SQL> conn / as sysdba
+已连接。
+SQL> create or replace public synonym student for ss_user.student;
+
+同义词已创建。
+
+SQL> spool off

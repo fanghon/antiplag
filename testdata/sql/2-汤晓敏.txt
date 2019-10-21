@@ -1,0 +1,163 @@
+SQL> conn / as sysdba
+已连接。
+SQL> CREATE TABLESPACE stuScore_tbs
+  2  DATAFILE 'D:\data\stuScore001.dbf' SIZE 3M AUTOEXTEND ON
+  3  NEXT 512K MAXSIZE 10M;
+
+表空间已创建。
+
+SQL> CREATE USER ss_user
+  2  IDENTIFIED BY ss01
+  3  DEFAULT TABLESPACE stuScore_tbs;
+
+用户已创建。
+
+SQL> GRANT connect,resource to ss_user;
+
+授权成功。
+
+SQL> CREATE TABLE student
+  2  (
+  3  sno CHAR(5) PRIMARY KEY,
+  4  sname VARCHAR2(20) NOT NULL,
+  5  ssex CHAR(2) CHECK(ssex in('男','女'))
+  6  );
+
+表已创建。
+
+
+
+SQL> CREATE TABLE course
+  2  (
+  3  sno CHAR(5) REFERENCES student(sno),
+  4  cname VARCHAR2(20) not null,
+  5  score NUMBER(4,1) CHECK(score between 0 and 100)
+  6  );
+
+表已创建。
+
+SQL> INSERT INTO student(sno,sname ssex)
+  2  VALUES ('12201','张润发','男');
+INSERT INTO student(sno,sname ssex)
+                              *
+第 1 行出现错误: 
+ORA-00917: 缺失逗号 
+
+
+SQL> INSERT INTO student(sno,sname,ssex)
+  2  VALUES ('12201','张润发','男');
+
+已创建 1 行。
+
+SQL> INSERT INTO student(sno,sname,ssex)
+  2  VALUES ('12202','李洁','女');
+
+已创建 1 行。
+
+SQL> INSERT INTO student(sno,sname,ssex)
+  2  VALUES ('12203','王小丫','女');
+
+已创建 1 行。
+
+
+
+SQL> INSERT INTO course(sno,cname,score)
+  2  VALUES('12201','软件测试',90);
+
+已创建 1 行。
+
+
+SQL> INSERT INTO course(sno,cname,score)
+  2  VALUES('12201','Oracle应用',80);
+
+已创建 1 行。
+
+SQL> INSERT INTO course(sno,cname,score)
+  2  VALUES('12202','Oracle应用',95);
+
+已创建 1 行。
+
+
+
+SQL> CREATE TABLE course_bak
+  2  AS
+  3  SELECT * FROM COURSE;
+
+表已创建。
+
+SQL> UPDATE score
+  2  SET score=score+2
+  3  WHERE sno='12201';
+UPDATE score
+       *
+第 1 行出现错误: 
+ORA-04044: 此处不允许过程, 函数, 程序包或类型 
+
+
+SQL> UPDATE course
+  2  SET score=score+2
+  3  WHERE sno='12201';
+
+已更新2行。
+
+SQL> DELETE FROM course WHERE sno='12202';
+
+已删除 1 行。
+
+SQL> SELECT sno,cname,score FROM course
+  2  ORDER BY sno,score;
+
+SNO   CNAME                     SCORE                                           
+----- -------------------- ----------                                           
+12201 Oracle应用                   82                                           
+12201 软件测试                     92                                           
+
+SQL> SELECT student.sno,sname,cname,score
+  2  FROM student join course on student.sno=course.sno;
+
+SNO   SNAME                CNAME                     SCORE                      
+----- -------------------- -------------------- ----------                      
+12201 张润发               Oracle应用                   82                      
+12201 张润发               软件测试                     92                      
+
+SQL> CREATE OR REPLACE VIEW v1
+  2  as select * from student where ssex='女';
+
+视图已创建。
+
+
+
+
+SQL> CREATE INDEX score_idx ON course(score desc);
+
+索引已创建。
+
+SQL> conn /as sysdba
+已连接。
+SQL> create or replace public synonym student for ss_user.student;
+
+同义词已创建。
+
+SQL> create sequence sq1;
+
+序列已创建。
+
+SQL> CREATE TABLE test
+  2  (
+  3  stuNo integer PRIMARY KEY,
+  4  stuName char(8) not null
+  5  );
+
+表已创建。
+
+SQL> INSERT INTO test
+  2  (stuNo,stuName) VALUES(sq1.nextval,'张三');
+
+已创建 1 行。
+
+SQL> INSERT INTO test
+  2  (stuNo,stuName) VALUES(sq1.nextval,'李四');
+
+已创建 1 行。
+
+SQL> spool off

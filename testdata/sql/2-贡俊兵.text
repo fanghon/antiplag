@@ -1,0 +1,198 @@
+SQL> create tablespace stuScore_tbs
+  2  datafile 'd:\data\stuScore001.dbf' size 3M
+  3  autoextend on next 512K maxsize 10M
+  4  ;
+
+表空间已创建。
+
+SQL> create user ss_user identified by ss01 default tablespace stuScore_tbs;
+
+用户已创建。
+
+SQL> grant connect,resource to ss_user;
+
+授权成功。
+
+SQL> create table student
+  2  (sno char(5) primary key,
+  3  sname varchar2(20) not null,
+  4  ssex char(2) check(ssex='男' or ssex='女'));
+
+表已创建。
+
+SQL> create table course
+  2  (sno char(5) references student(sno),
+  3  cname varchar2(20) not null,
+  4  score number(4,1) check(score between 0 and 100);
+score number(4,1) check(score between 0 and 100)
+                                               *
+第 4 行出现错误: 
+ORA-00907: 缺失右括号 
+
+
+SQL> edit
+已写入 file afiedt.buf
+
+  1  create table course
+  2  (sno char(5) references student(sno),
+  3  cname varchar2(20) not null,
+  4* score number(4,1) check(score between 0 and 100))
+SQL> /
+
+表已创建。
+
+SQL> insert into studnet(sno,sname,ssex) values(12201,'张润发','男');
+insert into studnet(sno,sname,ssex) values(12201,'张润发','男')
+            *
+第 1 行出现错误: 
+ORA-00942: 表或视图不存在 
+
+
+SQL> insert into student(sno,sname,ssex) values(12201,'张润发','男');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex) values(12202,'李洁','女');
+
+已创建 1 行。
+
+SQL> insert into student(sno,sname,ssex) values(12203,'王小丫','女');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values(12201,'软件测试','90');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values(12202,'Oracle应用','80');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values(12201,'Oracle应用','80');
+
+已创建 1 行。
+
+SQL> insert into course(sno,cname,score) values(12202,'Oracle应用','95');
+
+已创建 1 行。
+
+SQL> create table course_bak as select *  from course;
+
+表已创建。
+
+SQL> update course set score=score+2 where sno=12201;
+
+已更新2行。
+
+SQL> delete from course where sno=12202;
+
+已删除2行。
+
+SQL> select sno,cname,score from course order by sno,score;
+
+SNO   CNAME                     SCORE                                           
+----- -------------------- ----------                                           
+12201 Oracle应用                   82                                           
+12201 软件测试                     92                                           
+
+SQL> select sno,sname,cname,score
+  2  from course join on student course.sno=student.sno
+  3  ;
+from course join on student course.sno=student.sno
+                 *
+第 2 行出现错误: 
+ORA-00903: 表名无效 
+
+
+SQL> select sno,sname,cname,score
+  2  from student,course
+  3  where student.sno=course.sno;
+select sno,sname,cname,score
+       *
+第 1 行出现错误: 
+ORA-00918: 未明确定义列 
+
+
+SQL> edit
+已写入 file afiedt.buf
+
+  1  select student.sno,sname,cname,score
+  2  from student,course
+  3* where student.sno=course.sno
+SQL> /
+
+SNO   SNAME                CNAME                     SCORE                      
+----- -------------------- -------------------- ----------                      
+12201 张润发               Oracle应用                   82                      
+12201 张润发               软件测试                     92                      
+
+SQL> create view v1 as select * from student where ssex='女';
+
+视图已创建。
+
+SQL> create index score_idx for course(score desc);
+create index score_idx for course(score desc)
+                       *
+第 1 行出现错误: 
+ORA-00969: 缺失 ON 关键字 
+
+
+SQL> edit
+已写入 file afiedt.buf
+
+  1* create index score_idx on course(score desc)
+SQL> /
+
+索引已创建。
+
+SQL> conn / as sysdba
+已连接。
+SQL> create public synonym student for ss_user on ss_user.student
+  2  ;
+create public synonym student for ss_user on ss_user.student
+                                          *
+第 1 行出现错误: 
+ORA-00933: SQL 命令未正确结束 
+
+
+SQL> create public synonym student for ss_user.student;
+
+同义词已创建。
+
+SQL> create table
+  2  /''
+  3  
+SQL> 
+SQL> 
+SQL> create table test
+  2  (stuNO integer,stuName char(8));
+
+表已创建。
+
+SQL> create sequence sq1 increament by 1 start with 1;
+create sequence sq1 increament by 1 start with 1
+                    *
+第 1 行出现错误: 
+ORA-00933: SQL 命令未正确结束 
+
+
+SQL> create sequence sq1 start with 1;
+
+序列已创建。
+
+SQL> insert into test(stuNo,stuName) values(sq1.nextval,'张三');
+
+已创建 1 行。
+
+SQL> insert into test(stuNo,stuName) values(sq1.nextval,'李四');
+
+已创建 1 行。
+
+SQL> select * from test;
+
+     STUNO STUNAME                                                              
+---------- --------                                                             
+         1 张三                                                                 
+         2 李四                                                                 
+
+SQL> spool off
