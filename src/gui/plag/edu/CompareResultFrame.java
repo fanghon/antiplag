@@ -48,7 +48,7 @@ public class CompareResultFrame extends JFrame {
 				fr = new FileReader(resfile);
 				char[] chs = new char[(int)resfile.length()];
 				fr.read(chs);
-				return new String(chs);
+				return new String(chs).trim();
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -78,7 +78,8 @@ public class CompareResultFrame extends JFrame {
 					resfile  = new File("out.txt");
 				}
 				editPane.setText(getResult());
-				System.out.println(editPane.getText());
+			//	scrollPane.getVerticalScrollBar().setValue(0);
+				//System.out.println(editPane.getText());
 				
 			}
 		});
@@ -112,6 +113,7 @@ public class CompareResultFrame extends JFrame {
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 	}
 
+	
 	public File getResfile() {
 		return resfile;
 	}

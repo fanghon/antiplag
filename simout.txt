@@ -1,6 +1,10 @@
-File D:\fh\projects\Plag\testdata\tempsrc\zy_daifei_1.java: 223 tokens, 49 lines
-File D:\fh\projects\Plag\testdata\tempsrc\zy_fangchenfeng_1.java: 280 tokens, 83 lines
-Total: 503 tokens
+File D:\c\zy_fanghong_abadd.cpp: 52 tokens, 22 lines
+File D:\c\zy_fanghong_if.cpp: 127 tokens, 40 lines
+File D:\c\zy_zhangshang_abadd.cpp: 53 tokens, 22 lines
+File D:\c\zy_zhangshang_if.cpp: 72 tokens, 25 lines
+Total: 304 tokens
 
-D:\fh\projects\Plag\testdata\tempsrc\zy_daifei_1.java consists for 29 % of D:\fh\projects\Plag\testdata\tempsrc\zy_fangchenfeng_1.java material
-D:\fh\projects\Plag\testdata\tempsrc\zy_fangchenfeng_1.java consists for 22 % of D:\fh\projects\Plag\testdata\tempsrc\zy_daifei_1.java material
+D:\c\zy_zhangshang_if.cpp consists for 95 % of D:\c\zy_fanghong_if.cpp material
+D:\c\zy_fanghong_abadd.cpp consists for 69 % of D:\c\zy_zhangshang_abadd.cpp material
+D:\c\zy_zhangshang_abadd.cpp consists for 67 % of D:\c\zy_fanghong_abadd.cpp material
+D:\c\zy_fanghong_if.cpp consists for 54 % of D:\c\zy_zhangshang_if.cpp material

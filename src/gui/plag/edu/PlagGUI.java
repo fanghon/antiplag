@@ -295,9 +295,11 @@ public class PlagGUI extends JFrame {
 						} 
 					}else if("moss".equals(methodtype)) {
 						try {  //加载默认浏览器，显示结果网页
-							String url = cmd.getMoss().getUrl();
-							if(url!=null) {
-							  Desktop.getDesktop().browse(new URI(url));
+							if(cmd!=null) {
+							   String url = cmd.getMoss().getUrl();
+							   if(url!=null) {
+							     Desktop.getDesktop().browse(new URI(url));
+							   }
 							}
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -314,13 +316,17 @@ public class PlagGUI extends JFrame {
 		button_1.setBounds(385, 190, 93, 23);
 		contentPane.add(button_1);
 		
-		JButton button_2 = new JButton("\u5173\u4E8E");
+		JButton button_2 = new JButton("\u5E2E\u52A9");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//关于
-				String info = "作业查重系统\r\n 联系方式： fanghong_jmi@sina.com";
-				JOptionPane.showMessageDialog(PlagGUI.this, info, "系统信息", JOptionPane.INFORMATION_MESSAGE);
-
+				//帮助
+				//String info = "作业查重系统\r\n 联系方式： fanghong_jmi@sina.com";
+				//JOptionPane.showMessageDialog(PlagGUI.this, info, "系统信息", JOptionPane.INFORMATION_MESSAGE);
+                CompareResultFrame crf = new CompareResultFrame();
+                crf.setTitle("使用帮助");
+                File helpfile = new File("help.txt");
+                crf.setResfile(helpfile);                
+                crf.setVisible(true);
 			}
 		});
 		button_2.setBounds(385, 313, 93, 23);

@@ -118,6 +118,9 @@ public class FileConvertFrame extends JFrame {
 					
 					String[] filter = new String[1];
 					filter[0]="**/*."+type; //扫描所有子目录指定扩展名
+					if("python".equals(type)) {
+						filter[0]="**/*.py";
+					}
 					if("doc".equals(type)){  //文档类型，支持doc txt docx
 						filter = new String[3];
 						filter[0] = "**/*.doc";
@@ -189,7 +192,7 @@ public class FileConvertFrame extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		combType = new JComboBox();
-		combType.setModel(new DefaultComboBoxModel(new String[] {"java", "c", "cpp", "doc"}));
+		combType.setModel(new DefaultComboBoxModel(new String[] {"java", "c", "cpp", "python", "doc"}));
 		combType.setBounds(170, 200, 91, 21);
 		contentPane.add(combType);
 	}
