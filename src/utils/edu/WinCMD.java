@@ -113,7 +113,7 @@ public class WinCMD {
 		return res;
 	}
 	
-   //将绝对路径转成linux风格的相对路径，相对于user.dir，用于moss的路径转换
+   //将绝对路径转成linux风格的相对路径，相对于user.dir
 	String pathconvert(String path){
 		String res = null;
 		String xdpath = System.getProperty("user.dir");//获取程序当前路径
