@@ -1,2 +1,2 @@
-1  89.0%  testdata\c\zy_fanghong_if.cpp   testdata\c\zy_zhangshang_if.cpp 
-from stanford:http://moss.stanford.edu/results/68659108  Thu Oct 24 21:59:42 CST 2019
+1  8.0%  testdata\python\stu1_demo.py   testdata\python\stu1_lprcmd.py 
+from stanford:http://moss.stanford.edu/results/874773796  Fri Oct 25 19:19:17 CST 2019

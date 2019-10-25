@@ -1,6 +1,6 @@
-Uploading .\testdata\c\zy_fanghong_abadd.cpp...done
-Uploading .\testdata\c\zy_fanghong_if.cpp...done
-Uploading .\testdata\c\zy_zhangshang_abadd.cpp...done
-Uploading .\testdata\c\zy_zhangshang_if.cpp...done
+Uploading .\testdata\python\stu1_demo.py...done
+Uploading .\testdata\python\stu1_lprcmd.py...done
+Uploading .\testdata\python\stu2_demo.py...done
+Uploading .\testdata\python\stu2_lprcmd.py...done
 Query submitted.  Waiting for the server's response.
-http://moss.stanford.edu/results/68659108
+http://moss.stanford.edu/results/874773796

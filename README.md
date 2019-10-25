@@ -7,6 +7,7 @@
 ## 安装
 直接下载或clone项目源代码版，或下载软件的发布版[releases](https://github.com/fanghon/antiplag/releases)。
 源代码版可以直接导入eclipse，主入口类是gui.plag.edu下的PlagGUI。
+系统在window10，jdk11 64位下开发、运行。
 
 ## 使用
 在发布版子目录下，双击run.bat批处理程序，就能启动程序。使用说明参见发布版子目录下的软件使用文档。程序主界面如下：
