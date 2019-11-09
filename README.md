@@ -27,6 +27,12 @@
 3. 使用shinglecloud算法计算文本之间的相似度；
 4. 根据相似度排序，输出比较结果。
 
+### 参考文献：
+1. [Software Plagiarism Detection Techniques:A Comparative Study](http://www.ijcsit.com/docs/Volume%205/vol5issue04/ijcsit2014050441.pdf)
+2. [JPlag: Finding plagiarisms among a set of programs](http://page.mi.fu-berlin.de/prechelt/Biblio/jplagTR.pdf)
+3. [Winnowing: Local Algorithms for Document Fingerprinting](http://theory.stanford.edu/~aiken/publications/papers/sigmod03.pdf) moss系统采用的核心算法
+4. [软件抄袭检测研究综述](https://faculty.ist.psu.edu/wu/papers/spd-survey-16.pdf)
+
 ## TODO
 1. 将jplag整合进系统。已实现。
 2. 支持html，jsp文件的查重。
