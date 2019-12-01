@@ -121,11 +121,14 @@ public class FileConvertFrame extends JFrame {
 					if("python".equals(type)) {
 						filter[0]="**/*.py";
 					}
-					if("doc".equals(type)){  //文档类型，支持doc txt docx
-						filter = new String[3];
+					if("doc".equals(type)){  //文档类型，支持doc txt docx pdf html
+						filter = new String[6];
 						filter[0] = "**/*.doc";
 						filter[1] = "**/*.txt";
 						filter[2] = "**/*.docx";
+						filter[3] = "**/*.pdf";
+						filter[4] = "**/*.html";
+						filter[5] = "**/*.htm";
 					}
 					
 					String[] filestrs = AntFile.scanFiles(srcf, filter); //返回含子目录的相对文件名

@@ -133,7 +133,7 @@ public class PlagGUI extends JFrame {
 		panel.add(radBntProgram);
 		
 		radBntText = new JRadioButton("\u6587\u672C\u4F5C\u4E1A");
-		radBntText.setToolTipText("\u652F\u6301\u6587\u6863\u7C7B\u578B\uFF1Adoc docx txt");
+		radBntText.setToolTipText("\u652F\u6301\u6587\u6863\u7C7B\u578B\uFF1Adoc docx txt pdf html\u7B49");
 		radBntText.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				//文本作业按钮被选择

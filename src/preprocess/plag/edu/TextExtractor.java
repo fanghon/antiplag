@@ -37,7 +37,11 @@ public class TextExtractor {
 		try {
 			is = new FileInputStream(f);
 			Tika tika = new Tika();
-			String str = tika.parseToString(new FileInputStream(f));
+			Metadata metadata = new Metadata();
+			metadata.set(Metadata.RESOURCE_NAME_KEY, f.getName()); //避免gbk编码txt文本提取错误
+			String str = tika.parseToString(new FileInputStream(f),metadata);
+		//	System.out.println(f.getName());
+		//	System.out.println(str);
 			
 			return str;
 		} catch (FileNotFoundException e) {
@@ -100,7 +104,10 @@ public class TextExtractor {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		  File f = new File("D:\\fh\\教学\\201302\\软件测试\\学生提交作业\\第一次作业\\sunxiaolei-1.doc");
+		 //   File f = new File("./testdata/doccn/dongxiao-2.doc");
+		  File f = new File("./testdata/doccn/dongxiao-2.pdf");
+		//  File f = new File("./testdata/doccn/dongxiaogbk.txt");
+		//  File f = new File("./testdata/doccn/dongxiaoutf8-2.txt");
           System.out.println(TextExtractor.getTxt(f));  
           Metadata metadata = new Metadata();
           System.out.println(TextExtractor.fileToTxt(f,metadata));    

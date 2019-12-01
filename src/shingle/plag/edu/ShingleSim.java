@@ -14,26 +14,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import preprocess.plag.edu.IKAnalyzer;
 import preprocess.plag.edu.TextExtractor;
+import preprocess.plag.edu.Tokenizer;
 import utils.edu.FileIO;
 
-//import sim.edu.TestWinnowing.Fileter;
-//import preprocess.plag.edu;
 import data.plag.edu.SimData;
-import de.tud.kom.stringmatching.gst.GST;
-import de.tud.kom.stringmatching.gst.GSTTile;
-import de.tud.kom.stringmatching.gst.utils.GSTHighlighter;
 import de.tud.kom.stringmatching.shinglecloud.ShingleCloud;
-import de.tud.kom.stringmatching.shinglecloud.ShingleCloudMatch;
-import de.tud.kom.stringutils.preprocessing.WhiteSpaceRemovalPreprocessing;
-import de.tud.kom.stringutils.tokenization.CharacterTokenizer;
-import de.tud.kom.stringutils.tokenization.WordTokenizer;
-//import fengci.edu.IKAnalyzer;
 
 public class ShingleSim {
     String dic = null;  //作业路径名
-    float  threshold = 0.3f; //相似门限是0.3
+    float  threshold = 0.3f; //相似门限默认是0.3
 	List<File> filels = new ArrayList<File>(); //需要比较的文件
 	List<SimData> listsd = new ArrayList<SimData>(); //文件比较的结果
 
@@ -53,14 +43,17 @@ public class ShingleSim {
 		}
 	}
 
-	// 实现文件过滤接口，内部类方式,只允许doc、txt、docx类文件及子目录
+	// 实现文件过滤接口，内部类方式,只允许doc、txt、docx、pdf类文件及子目录
 	class Fileter implements FileFilter {
 		@Override
 		public boolean accept(File arg0) {
 			// TODO Auto-generated method stub
-			if (arg0.getName().endsWith(".doc")  //
-					|| arg0.getName().endsWith(".txt")
-					|| arg0.getName().endsWith(".docx") || arg0.isDirectory())
+			String fn = arg0.getName().toLowerCase();
+			if (fn.endsWith(".doc")  //
+					|| fn.endsWith(".txt")
+					|| fn.endsWith(".docx") 
+					|| fn.endsWith(".pdf") 
+					|| arg0.isDirectory())
 				return true;
 			return false;
 		}
@@ -70,7 +63,8 @@ public class ShingleSim {
 		String resstr=null;
 		try {
 			String str = TextExtractor.getTxt(file); 
-			resstr = IKAnalyzer.segment(str,true," "); //智能分词、停用词过滤，空格分开
+			//resstr = IKAnalyzer.segment(str,true," "); //智能分词、停用词过滤，空格分开
+			resstr = Tokenizer.segment(str," ");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

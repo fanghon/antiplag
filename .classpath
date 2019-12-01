@@ -6,11 +6,11 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/IKAnalyzer2012_u6.jar"/>
 	<classpathentry kind="lib" path="lib/shinglecloud-0.51.jar"/>
 	<classpathentry kind="lib" path="lib/tika-app-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/ant.jar"/>
 	<classpathentry kind="lib" path="lib/substance-5.3.jar"/>
 	<classpathentry kind="lib" path="lib/jplag-2.12.1-SNAPSHOT-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/hanlp-portable-1.7.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

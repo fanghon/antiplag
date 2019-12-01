@@ -22,8 +22,8 @@
 本系统在它们基础上进行了二次开发和封装，针对moss系统，开发出了客户端存取模块，实现了代码文件提交、结果获取和解析、结果排序等功能；针对sim和jplag，则将其集成到系统中，在moss因网络故障等原因不可用时，可作为替代产品使用。
 
 中英文文档作业相似度的比较则基于[shinglecloud算法](https://www.kom.tu-darmstadt.de/de/research-results/0/1/shinglecloud/)（一种基于文本指纹的、语言无关的相似度快速计算方法），文档主要处理过程如下：
-1. 使用tika读取不同格式（txt、doc、docx等）的文档，并将其转换成能统一处理的文本；
-2. 使用ikanalyzer对文本进行预处理、精确分词；
+1. 使用tika读取不同格式（txt、doc、docx、pdf、html等）不同编码文件中的文本内容，并将其转换成能统一处理的文本；
+2. 使用hanlp对文本进行预处理、分词；
 3. 使用shinglecloud算法计算文本之间的相似度；
 4. 根据相似度排序，输出比较结果。
 
@@ -32,6 +32,9 @@
 2. [JPlag: Finding plagiarisms among a set of programs](http://page.mi.fu-berlin.de/prechelt/Biblio/jplagTR.pdf)
 3. [Winnowing: Local Algorithms for Document Fingerprinting](http://theory.stanford.edu/~aiken/publications/papers/sigmod03.pdf) moss系统采用的核心算法
 4. [软件抄袭检测研究综述](https://faculty.ist.psu.edu/wu/papers/spd-survey-16.pdf)
+
+## 更新情况
+1. 2019.12.1 使用hanlp作为分词组件，增加支持pdf、html文件文本的查重，修复若干bug，发布v2.8.6版。
 
 ## TODO
 1. 将jplag整合进系统。已实现。
