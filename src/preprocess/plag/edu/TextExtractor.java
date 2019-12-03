@@ -105,9 +105,10 @@ public class TextExtractor {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		 //   File f = new File("./testdata/doccn/dongxiao-2.doc");
-		  File f = new File("./testdata/doccn/dongxiao-2.pdf");
+		 // File f = new File("./testdata/doccn/dongxiao-2.pdf");
 		//  File f = new File("./testdata/doccn/dongxiaogbk.txt");
 		//  File f = new File("./testdata/doccn/dongxiaoutf8-2.txt");
+		  File f = new File("./testdata/doccn/dongxiao-2.html");
           System.out.println(TextExtractor.getTxt(f));  
           Metadata metadata = new Metadata();
           System.out.println(TextExtractor.fileToTxt(f,metadata));    

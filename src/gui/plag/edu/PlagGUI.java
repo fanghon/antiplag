@@ -161,7 +161,7 @@ public class PlagGUI extends JFrame {
 		panel_1.add(label);
 		
 		txtThreshold = new JTextField();
-		txtThreshold.setText("30");
+		txtThreshold.setText("50");
 		txtThreshold.setToolTipText("\u8BF7\u8F93\u51650-100\u4E4B\u95F4\u7684\u503C");
 		txtThreshold.setBounds(80, 26, 70, 21);
 		panel_1.add(txtThreshold);
@@ -202,6 +202,7 @@ public class PlagGUI extends JFrame {
 					combLang.addItem("c/c++");
 					combLang.addItem("python3");
 					combLang.addItem("text");
+					combLang.addItem("doc");
 				}
 			}
 		});

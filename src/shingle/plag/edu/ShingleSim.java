@@ -43,7 +43,7 @@ public class ShingleSim {
 		}
 	}
 
-	// 实现文件过滤接口，内部类方式,只允许doc、txt、docx、pdf类文件及子目录
+	// 实现文件过滤接口，内部类方式,只允许doc、txt、docx、pdf、html类文件及子目录
 	class Fileter implements FileFilter {
 		@Override
 		public boolean accept(File arg0) {
@@ -53,6 +53,8 @@ public class ShingleSim {
 					|| fn.endsWith(".txt")
 					|| fn.endsWith(".docx") 
 					|| fn.endsWith(".pdf") 
+					|| fn.endsWith(".html")
+					|| fn.endsWith(".htm")
 					|| arg0.isDirectory())
 				return true;
 			return false;

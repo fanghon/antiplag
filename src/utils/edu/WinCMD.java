@@ -15,7 +15,9 @@ import jplag.ExitException;
 import jplag.JPlag;
 import jplag.Program;
 import jplag.options.CommandLineOptions;
+import jplag.options.CommandLineOptionsExt;
 import moss.plag.edu.*;
+import preprocess.plag.edu.TextExtractor;
 
 public class WinCMD {
 	String outfile = "out.txt"; 
@@ -131,12 +133,44 @@ public class WinCMD {
 		
 		return res;
 	}
+	//用tika读取给定目录下文档，以utf-8编码同名 txt文件形式写入一个临时文件夹下，返回该临时文件夹
+	File preJplag(String dir) {
+		File tempdir = new File("./tmp"+System.currentTimeMillis());
+		int res = AntFile.makeDir(tempdir);
+		String[] filter={"**/*.*"};  // 获取所有文件
+		String[] filestrs = AntFile.scanFiles(new File(dir), filter);
+		String name = null;
+		for(String file:filestrs) {
+			name = file.substring(0, file.indexOf('.'))+".txt";
+			File outfile = new File(tempdir, name);
+			String str = TextExtractor.getTxt(new File(dir, file));
+			FileIO.saveFile(outfile, str, "utf-8");
+		}
+		
+		return tempdir ;
+	}
 	
+	void postJplag(File tempdir) {
+		if(tempdir!=null) {
+		  AntFile.deleteDir(tempdir);
+		}
+	}
 	//调用Jplag的方法，对代码进行比较,成功返回0，失败返回-1
 	public int execJplag(String lang,float threshold,String files,List<SimData> lists){
 		  int res = -1;
+		  File tmpf = null;
+		  long t = System.currentTimeMillis();
+		  try {		    
 			String INPUT_FILE_FOLDER_NAME=files ;  //输入文件目录
+		    
+			if("doc".equals(lang)) {
+		    	tmpf = preJplag(files);
+		    	INPUT_FILE_FOLDER_NAME=tmpf.getAbsolutePath() ;  //输入文件目录
+		    }
+		    
 			String jplagResultsFolderName="./jplagresult/";   //检查结果放在项目的子目录下
+			// AntFile.deleteDir(new File(jplagResultsFolderName )); //先删除结果目录
+			
 			float MINIMUM_FILE_SIMILARITY = threshold ;
 			String EXCLUDE_FILES = null ;  
 			ArrayList<String> args = new ArrayList<String>();
@@ -156,24 +190,27 @@ public class WinCMD {
 				args.add("-x");
 				args.add(EXCLUDE_FILES);
 			}
+		//	args.add("-clustertype");   //对结果聚类，发现成组抄袭
+		//	args.add("avr");
+			
 			args.add(INPUT_FILE_FOLDER_NAME);
 			String[] toPass = new String[args.size()];
 			toPass = args.toArray(toPass);
-	      //  System.out.println(toPass.toString());
-	       // JPlag.main(toPass);
-	        try {
-                CommandLineOptions options = new CommandLineOptions(toPass, null);
-                Program program = new Program(options);
-                 
-                System.out.println("jplag initialize ok "+program.get_commandLine());
-                program.run();
-                res = 0; //执行成功
-            }
-            catch(ExitException ex) {
-                System.out.println("Error: "+ex.getReport());
+	    
+            CommandLineOptionsExt options = new CommandLineOptionsExt(toPass, null);
                 
-            } 
-		  
+            Program program = new Program(options);
+                 
+            System.out.println("jplag initialize ok "+program.get_commandLine());
+            program.run();
+            res = 0; //执行成功
+          
+		  } catch(Exception e) {
+	    	  e.printStackTrace();
+	      }finally {
+	   		  postJplag(tmpf);
+	      }
+		  System.out.println("time:"+(System.currentTimeMillis()-t)+"ms");
 	      return res ; 
 	}
 	

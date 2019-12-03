@@ -184,13 +184,13 @@ public class AntFile {
 	
 	public static void main(String[] args){
 		File src =new File("./demo/7/Selenium.zip"); //不支持rar文件的解压
-		File dest=new File("./demo/7/");
-		AntFile.unzip(src, dest);
+		File dest=new File("./testdata/doccn/");
+	//	AntFile.unzip(src, dest);
 		
 		 //AntFile.deleteFile(src); //pass test
 		//AntFile.deleteDir(new File(dest.getAbsoluteFile()+"\\zhengchaota_atm"));
 		//提取指定目录下的所有java文件，含子目录下的
-		String[] filter={"**/*.java"};  //"*.zip"
+		String[] filter={"**/*.doc"};  //"*.zip"
 		String[] files = AntFile.scanFiles(dest, filter);
 		if(files!=null){
 			for(String str:files){
@@ -199,7 +199,7 @@ public class AntFile {
 		}
 		
 		//在当前路径下创建一个目录
-		AntFile.makeDir(new File("./temp"));
+	//	AntFile.makeDir(new File("./temp"));
 		
 	}
  
