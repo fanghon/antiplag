@@ -1,5 +1,5 @@
 # antiplag 程序代码及文档作业相似度检查软件
-软件主要检查、比较学生提交的电子档作业之间的相似度，能对多种编程语言（如java、c/c++、python等）、多种格式（txt、doc、docx、pdf等）的中英文、简繁体文档（如实验报告）之间的文本相似度进行比较分析，输出相似度高的文档，进而辅助发现学生之间互相抄袭的行为。
+软件主要检查、比较学生提交的电子档作业之间的相似度，能对多种编程语言（如java、c/c++、python等）、多种格式（txt、doc、docx、pdf等）的中英文、简繁体文档之间的文本、多种格式（png、jpg、gif、bmp等）的图片相似度进行比较分析，输出相似度高的文档、图片，进而辅助发现学生之间互相抄袭的行为。
 
 ## 需求
 [jdk11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
@@ -14,7 +14,7 @@
 ![程序主界面](./maingui.png) 
   
 ## 原理
-系统采用的主要技术是字符串相似度比较算法、代码词法语法解析、自然语言处理（nlp）中的分词。
+系统采用的主要技术是字符串相似度比较算法、代码词法语法解析、自然语言处理（nlp）中的分词、图片相似度比较算法。
 
 程序类文本的相似度比较基于3个开放系统：
 * 一是基于网络服务的[MOSS系统](http://theory.stanford.edu/~aiken/moss/)（斯坦福大学开放的支持多种编程语言代码相似度比较的系统）;
@@ -33,6 +33,10 @@
 
 第二种是基于jplag的GST算法，对其功能进行了扩展，增加的“doc”语言类型，可以对各种文档进行相似度计算，并提供基于网页的可视化比对功能。
 
+图片的相似度比较基于[JImageHash项目](https://github.com/KilianB/JImageHash)：
+
+主要采用了图片phash指纹相似度比较算法。
+
 ### 参考文献：
 1. [Software Plagiarism Detection Techniques:A Comparative Study](http://www.ijcsit.com/docs/Volume%205/vol5issue04/ijcsit2014050441.pdf)
 2. [JPlag: Finding plagiarisms among a set of programs](http://page.mi.fu-berlin.de/prechelt/Biblio/jplagTR.pdf)
@@ -42,7 +46,7 @@
 ## TODO
 1. 将jplag整合进系统。已实现。
 2. 支持html，jsp文件代码的查重。
-3. 支持图片文件查重。
+3. 支持图片文件查重。已实现。
 4. 开发web版作业查重软件。
 5. 支持存储以往作业文档，支持基于数据库的作业查重。
 
@@ -51,5 +55,6 @@
 ## 更新情况
 1. 2019.12.1 使用hanlp作为分词组件，支持pdf、html文件文本的查重，修复若干bug，发布v2.8.6版。
 2. 2019.12.3 扩展jplag功能，提供“doc”语言类型，实现了对多种格式文档文本的相似度计算及可视化比对功能。更新使用帮助，测试数据，发布v2.8.8版。
+3. 2019.12.25 实现图片相似比较功能，使用phash，实现了对多种格式图片的相似比较。更新测试数据，文档，发布版v3.0.0版。
 
  

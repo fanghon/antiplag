@@ -184,7 +184,7 @@ public class ShingleSim {
 			 File outfile = new File("out.txt");
 			 FileIO.saveFile(outfile, testsc.listsd,2,"from fh"); //结果是由小到大排的
 			 
-			 System.out.println("handle documents:"+testsc.listsd.size());
+			 System.out.println("handle documents:"+testsc.filels.size());
 			 System.out.println("time:"+(System.currentTimeMillis()-st));
 			}else{
 				System.out.println("参数错误");

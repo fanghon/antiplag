@@ -34,6 +34,7 @@ import javax.swing.event.ChangeEvent;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.BusinessBlueSteelSkin;
 
+import imghash.plag.edu.ImageSim;
 import moss.plag.edu.Http;
 
 import shingle.plag.edu.ShingleSim;
@@ -53,6 +54,7 @@ public class PlagGUI extends JFrame {
 
 	
 	WinCMD cmd;
+	private JRadioButton radBntImage;
 	/**
 	 * Launch the application.
 	 */
@@ -125,6 +127,7 @@ public class PlagGUI extends JFrame {
 						&& combLang!=null){
 					combMethod.setEnabled(true); // 使能算法选择按钮
 					combLang.setEnabled(true);
+					txtThreshold.setText("50");
 				}
 			}
 		});
@@ -140,15 +143,37 @@ public class PlagGUI extends JFrame {
 				if(radBntText.isSelected()){
 					combMethod.setEnabled(false); //禁止算法选择按钮
 					combLang.setEnabled(false);
+					txtThreshold.setText("50");
 				}
 			}
 		});
-		radBntText.setBounds(158, 26, 98, 23);
+		radBntText.setBounds(106, 26, 98, 23);
 		ButtonGroup rbGroup = new ButtonGroup();
 		rbGroup.add(radBntProgram);
 		rbGroup.add(radBntText);
 		
 		panel.add(radBntText);
+		
+		radBntImage = new JRadioButton("\u56FE\u7247");
+		radBntImage.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				//图片按钮被选择
+				if(radBntImage.isSelected()){
+					combMethod.setEnabled(false); //禁止算法选择按钮
+					combLang.setEnabled(false);
+					txtThreshold.setText("80");
+				}
+			}
+			
+		});
+		radBntImage.setToolTipText("\u652F\u6301\u56FE\u7247\u7C7B\u578B\uFF1Apng jpeg gif");
+		radBntImage.setBounds(201, 26, 98, 23);
+		panel.add(radBntImage);
+		
+		ButtonGroup g1=new ButtonGroup();
+		g1.add(radBntProgram);
+        g1.add(radBntText);
+		g1.add(radBntImage);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "\u53C2\u6570", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -256,7 +281,16 @@ public class PlagGUI extends JFrame {
 							}else if(res>0){
 								JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，未发现符合限值要求的结果，可以尝试调低相似度限值");
 							}
-						}			
+						}else if(radBntImage.isSelected()){ //比较图片
+							  String[] args = new String[2];
+							  args[0] = path;
+							  args[1] = threshold;
+							  ImageSim.main(args)	;  // 执行比较
+							  JOptionPane.showMessageDialog(PlagGUI.this, "执行完毕，请查看结果。\r\n如果结果为空，可以尝试调低相似度限值");	
+							
+							
+							
+						}
 						
 						
 					}else{
