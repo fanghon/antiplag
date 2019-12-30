@@ -154,7 +154,7 @@ public class PlagGUI extends JFrame {
 		
 		panel.add(radBntText);
 		
-		radBntImage = new JRadioButton("\u56FE\u7247");
+		radBntImage = new JRadioButton("\u56FE\u7247\u4F5C\u4E1A");
 		radBntImage.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				//Í¼Æ¬°´Å¥±»Ñ¡Ôñ
