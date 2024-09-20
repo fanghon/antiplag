@@ -75,7 +75,7 @@ public class PlagGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PlagGUI() {
-		setTitle("\u4F5C\u4E1A\u67E5\u91CD\u7CFB\u7EDF");
+		setTitle("Antiplag\u4F5C\u4E1A\u67E5\u91CD\u7CFB\u7EDF");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 200, 537, 423);
 		setLocationRelativeTo(null);
