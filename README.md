@@ -47,7 +47,7 @@
 1. 将jplag整合进系统。已实现。
 2. 支持html，jsp文件代码的查重。
 3. 支持图片文件查重。已实现。
-4. 开发web版作业查重软件。已实现，请参考[dalefe](https://gitee.com/dalefe/antiplag-web-backstage)
+4. 开发web版作业查重软件。已实现，请参考[antiplag-web](https://github.com/fanghon/antiplag-web/)
 5. 支持存储以往作业文档，支持基于数据库的作业查重。
 
 源于开源，还于开源，开源是美德，加星也是美德 :smile: 。
